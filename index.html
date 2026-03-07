@@ -503,34 +503,30 @@
 
 
         .adj-wrap {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px dashed var(--border-light);
+            margin-top: 8px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
         }
 
         .adj-lbl {
-            font-size: 13.8px;
-            color: var(--txt2);
-            font-weight: 500;
+            display: none;
         }
 
         .adj-ctrl {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .adj-input {
-            width: 60px;
+            width: 55px;
             text-align: right;
             padding: 4px 6px;
             border: 1.5px solid var(--border);
             border-radius: 6px;
             font-family: 'Noto Sans KR', sans-serif;
-            font-size: 16px;
+            font-size: 13px;
             color: var(--txt);
             background: var(--bg);
         }
@@ -538,6 +534,25 @@
         .adj-input:focus {
             outline: none;
             border-color: var(--accent);
+        }
+
+        .adj-btn {
+            padding: 4px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            background: var(--card);
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--txt2);
+            transition: all 0.15s;
+            line-height: 1;
+        }
+
+        .adj-btn:hover {
+            background: var(--border-light);
+            color: var(--txt);
         }
 
         /* RIGHT PANEL */
@@ -830,32 +845,46 @@
             }
         }
 
+
         @media(max-width:640px) {
-
-
-
-
-
-
-
-
-
-
-            .cat-controls {
-                align-items: flex-end;
+            .cat-hd {
+                flex-wrap: wrap;
             }
 
+            .cat-info {
+                flex: 1 1 100%;
+                min-width: 100%;
+                margin-bottom: 8px;
+            }
 
+            .cat-right {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding-top: 10px;
+                margin-top: 4px;
+                border-top: 1px dashed var(--border-light);
+            }
+
+            .cat-amt-wrapper {
+                align-items: flex-start;
+            }
+
+            .cat-amt {
+                text-align: left;
+            }
 
             .preset-bar {
                 overflow-x: auto;
                 white-space: nowrap;
-                flex-wrap: wrap;
+                padding-bottom: 12px;
+                /* scrollbar space */
             }
 
             .legend {
                 margin-left: 0;
-                margin-top: 8px;
+                margin-top: 12px;
                 width: 100%;
                 justify-content: flex-end;
                 border-top: 1px dashed var(--border-light);
@@ -1281,8 +1310,7 @@
 
                 const a = adjs[c.id] || 0;
                 const adjHTML = c.fixed ? '' : `
-      <div class="adj-wrap">
-        <div class="adj-lbl">수동 시뮬레이션 조정</div>
+      <div class="adj-wrap" style="margin-top: 8px; justify-content: flex-end;">
         <div class="adj-ctrl">
           <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', -100)">-</button>
           <input type="number" class="adj-input" id="adjin-${c.id}" value="${a}" onclick="event.stopPropagation()" onchange="setAdj('${c.id}', this.value)" placeholder="0">
@@ -1309,6 +1337,7 @@
           </div>
           <div class="cat-controls" onclick="event.stopPropagation()">
             ${ctrlHTML}
+            ${adjHTML}
           </div>
         </div>
       </div>
@@ -1316,7 +1345,6 @@
         <div id="detd-${c.id}">
           ${details.map(d => `<div class="det-row"><span>${d.k}</span><span>${d.v}</span></div>`).join('')}
         </div>
-        ${adjHTML}
       </div>`;
                 el.appendChild(div);
             });
