@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하와이 스테이 비용 계산기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@100..900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg: #F4EFE6;
+            --bg2: #EDE6D9;
+            --card: #FDFAF5;
+            --card2: #F5F0E6;
+            --border: #DDD4C0;
+            --border-light: #E8E1D4;
+            --txt: #251808;
+            --txt2: #6B5240;
+            --txt3: #A08870;
+            --accent: #B85430;
+            --accent-l: #F2E0D4;
+            --accent-d: #8C3D20;
+            --tight: #2A6044;
+            --tight-bg: #DCF0E7;
+            --neutral: #1A4D8A;
+            --neutral-bg: #D8E9F8;
+            --comfort: #962224;
+            --comfort-bg: #FADDDE;
+            --shadow: 0 1px 4px rgba(37, 24, 8, .08);
+            --shadow-md: 0 4px 16px rgba(37, 24, 8, .10);
+            --r: 10px;
+            --r-lg: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--bg);
+            color: var(--txt);
+            font-size: 16.9px;
+            line-height: 1.6;
+            min-height: 100vh
+        }
+
+        /* HEADER */
+        .hd {
+            background: var(--card);
+            border-bottom: 1.5px solid var(--border);
+            padding: 16px 28px;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: var(--shadow)
+        }
+
+        .hd-left h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24.2px;
+            font-weight: 600;
+            letter-spacing: -.01em
+        }
+
+        .hd-left p {
+            font-size: 13.3px;
+            color: var(--txt3);
+            margin-top: 1px
+        }
+
+        .hd-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .dur-toggle {
+            display: flex;
+            background: var(--card2);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden
+        }
+
+        .dur-btn {
+            padding: 7px 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 14.5px;
+            font-weight: 500;
+            color: var(--txt2);
+            transition: all .15s;
+            white-space: nowrap
+        }
+
+        .dur-btn.on {
+            background: var(--accent);
+            color: #fff
+        }
+
+        .rate-grp {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14.5px;
+            color: var(--txt2)
+        }
+
+        .rate-in {
+            width: 72px;
+            padding: 6px 8px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--r);
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 14.5px;
+            color: var(--txt);
+            background: var(--card);
+            text-align: right;
+            transition: border .15s
+        }
+
+        .rate-in:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        .mode-tabs {
+            display: flex;
+            gap: 3px;
+            background: var(--card2);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r);
+            padding: 3px
+        }
+
+        .m-tab {
+            padding: 6px 14px;
+            border: none;
+            background: transparent;
+            border-radius: 7px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 14.5px;
+            font-weight: 500;
+            color: var(--txt2);
+            transition: all .15s
+        }
+
+        .m-tab.on {
+            background: var(--card);
+            color: var(--txt);
+            box-shadow: var(--shadow)
+        }
+
+        /* MAIN */
+        .main {
+            max-width: 1340px;
+            margin: 0 auto;
+            padding: 24px 28px
+        }
+
+        /* PRESET BAR */
+        .preset-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 13px 18px;
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r);
+            box-shadow: var(--shadow)
+        }
+
+        .preset-lbl {
+            flex-shrink: 0;
+            font-size: 13.3px;
+            font-weight: 600;
+            color: var(--txt3);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            margin-right: 2px
+        }
+
+        .p-btn {
+            flex-shrink: 0;
+            padding: 7px 16px;
+            border: 1.5px solid;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 14.5px;
+            font-weight: 500;
+            transition: all .15s
+        }
+
+        .p-tight {
+            border-color: var(--tight);
+            color: var(--tight);
+            background: #fff
+        }
+
+        .p-tight:hover,
+        .p-tight.on {
+            background: var(--tight);
+            color: #fff
+        }
+
+        .p-neutral {
+            border-color: var(--neutral);
+            color: var(--neutral);
+            background: #fff
+        }
+
+        .p-neutral:hover,
+        .p-neutral.on {
+            background: var(--neutral);
+            color: #fff
+        }
+
+        .p-comfort {
+            border-color: var(--comfort);
+            color: var(--comfort);
+            background: #fff
+        }
+
+        .p-comfort:hover,
+        .p-comfort.on {
+            background: var(--comfort);
+            color: #fff
+        }
+
+        .legend {
+            display: flex;
+            gap: 10px;
+            margin-left: auto
+        }
+
+        .leg-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13.3px;
+            color: var(--txt3)
+        }
+
+        .leg-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%
+        }
+
+        /* GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr minmax(0, 360px);
+            gap: 20px;
+            align-items: start
+        }
+
+        /* CATEGORY CARDS */
+        .cats {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .cat {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: box-shadow .2s
+        }
+
+        .cat:hover {
+            box-shadow: var(--shadow-md)
+        }
+
+        .cat-hd {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 13px 16px;
+            cursor: pointer
+        }
+
+        .cat-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: var(--accent-l);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19.4px;
+            flex-shrink: 0;
+            margin-top: 2px
+        }
+
+        .cat-info {
+            flex: 1;
+            min-width: 0;
+            padding-top: 2px
+        }
+
+        .cat-name {
+            font-size: 15.7px;
+            font-weight: 600;
+            color: var(--txt);
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .cat-sub {
+            font-size: 13.3px;
+            color: var(--txt3);
+            margin-top: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .cat-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+            flex-shrink: 0
+        }
+
+        .cat-amt-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .cat-amt {
+            text-align: right
+        }
+
+        .c-usd {
+            font-family: 'Crimson Pro', serif;
+            font-size: 19.4px;
+            font-weight: 600;
+            color: var(--txt)
+        }
+
+        .c-krw {
+            font-size: 12.1px;
+            color: var(--txt3)
+        }
+
+        .sc-btns {
+            display: flex;
+            gap: 3px
+        }
+
+        .sc-btn {
+            padding: 4px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 13.3px;
+            font-weight: 500;
+            color: var(--txt2);
+            background: var(--bg);
+            transition: all .12s;
+            white-space: nowrap
+        }
+
+        .sc-btn.on-tight {
+            background: var(--tight);
+            border-color: var(--tight);
+            color: #fff
+        }
+
+        .sc-btn.on-neutral {
+            background: var(--neutral);
+            border-color: var(--neutral);
+            color: #fff
+        }
+
+        .sc-btn.on-comfort {
+            background: var(--comfort);
+            border-color: var(--comfort);
+            color: #fff
+        }
+
+        .badge-fixed {
+            font-size: 12.1px;
+            padding: 2px 7px;
+            background: var(--accent-l);
+            color: var(--accent);
+            border-radius: 8px;
+            font-weight: 600
+        }
+
+        .badge-ok {
+            font-size: 12.1px;
+            padding: 2px 7px;
+            background: var(--tight-bg);
+            color: var(--tight);
+            border-radius: 8px;
+            font-weight: 600
+        }
+
+        .cat-details {
+            padding: 0 16px 12px;
+            border-top: 1px solid var(--border-light)
+        }
+
+        .det-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            font-size: 14px;
+            color: var(--txt2);
+            border-bottom: 1px dashed var(--border-light)
+        }
+
+        .det-row:last-child {
+            border-bottom: none
+        }
+
+        .det-row span:last-child {
+            font-weight: 500;
+            color: var(--txt);
+            text-align: right;
+            max-width: 55%
+        }
+
+        .chevron {
+            font-size: 12.1px;
+            color: var(--txt3);
+            transition: transform .2s;
+            margin-left: 2px
+        }
+
+        .chevron.open {
+            transform: rotate(180deg)
+        }
+
+        .cat-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            cursor: default;
+        }
+
+
+        .adj-wrap {
+            margin-top: 8px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .adj-lbl {
+            display: none;
+        }
+
+        .adj-ctrl {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .adj-input {
+            width: 55px;
+            text-align: right;
+            padding: 4px 6px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 13px;
+            color: var(--txt);
+            background: var(--bg);
+        }
+
+        .adj-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .adj-btn {
+            padding: 4px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            background: var(--card);
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--txt2);
+            transition: all 0.15s;
+            line-height: 1;
+        }
+
+        .adj-btn:hover {
+            background: var(--border-light);
+            color: var(--txt);
+        }
+
+        /* RIGHT PANEL */
+        .panel {
+            position: sticky;
+            top: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .pc {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 18px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            word-break: break-word;
+        }
+
+        .pc-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 18.2px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            color: var(--txt)
+        }
+
+        .br-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 14.5px;
+            border-bottom: 1px dashed var(--border-light)
+        }
+
+        .br-row:last-of-type {
+            border-bottom: none
+        }
+
+        .br-lbl {
+            color: var(--txt2);
+            display: flex;
+            align-items: center;
+            gap: 5px
+        }
+
+        .br-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .br-val {
+            font-weight: 500;
+            text-align: right
+        }
+
+        .br-krw {
+            font-size: 12.1px;
+            color: var(--txt3)
+        }
+
+        .total-sep {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid var(--border)
+        }
+
+        .t-usd {
+            font-family: 'Crimson Pro', serif;
+            font-size: 36.3px;
+            font-weight: 600;
+            color: var(--accent);
+            line-height: 1
+        }
+
+        .t-krw {
+            font-size: 16.9px;
+            color: var(--txt2);
+            margin-top: 4px
+        }
+
+        .dep-note {
+            font-size: 12.8px;
+            color: var(--txt3);
+            font-style: italic;
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: var(--bg);
+            border-radius: 7px;
+            line-height: 1.5
+        }
+
+        /* COMPARISON */
+        .cmp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px
+        }
+
+        .cmp-col {
+            background: var(--bg);
+            border-radius: var(--r);
+            padding: 11px;
+            text-align: center;
+            border: 1.5px solid transparent;
+            transition: all .2s
+        }
+
+        .cmp-col.act {
+            background: var(--accent-l);
+            border-color: var(--accent)
+        }
+
+        .cmp-dur {
+            font-size: 12.1px;
+            font-weight: 600;
+            color: var(--txt3);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            margin-bottom: 5px
+        }
+
+        .cmp-usd {
+            font-family: 'Crimson Pro', serif;
+            font-size: 24.2px;
+            font-weight: 600;
+            color: var(--txt)
+        }
+
+        .cmp-krw {
+            font-size: 13.3px;
+            color: var(--txt2);
+            margin-top: 2px
+        }
+
+        .cmp-diff {
+            margin-top: 10px;
+            padding: 7px 10px;
+            background: var(--bg);
+            border-radius: 7px;
+            font-size: 13.3px;
+            color: var(--txt2);
+            text-align: center
+        }
+
+        /* CHART */
+        .chart-wrap {
+            height: 190px;
+            position: relative
+        }
+
+        /* ACTUAL MODE */
+        .act-cats {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .ac {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow)
+        }
+
+        .ac-hd {
+            padding: 11px 16px;
+            background: var(--card2);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .ac-name {
+            font-size: 15.7px;
+            font-weight: 600
+        }
+
+        .ac-est {
+            font-size: 13.3px;
+            color: var(--txt3)
+        }
+
+        .ac-body {
+            padding: 12px 16px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px
+        }
+
+        .ac-iw {
+            flex: 1
+        }
+
+        .ac-lbl {
+            font-size: 13.3px;
+            color: var(--txt3);
+            margin-bottom: 4px
+        }
+
+        .ac-in {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15.7px;
+            color: var(--txt);
+            background: var(--bg);
+            transition: border .15s
+        }
+
+        .ac-in:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        .ac-var {
+            font-size: 15.7px;
+            font-weight: 600;
+            min-width: 72px;
+            text-align: right;
+            padding-bottom: 8px
+        }
+
+        .vp {
+            color: var(--comfort)
+        }
+
+        .vn {
+            color: var(--tight)
+        }
+
+        .vz {
+            color: var(--txt3)
+        }
+
+        /* ACTUAL SUMMARY */
+        .as-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 14.5px;
+            border-bottom: 1px dashed var(--border-light)
+        }
+
+        .as-row:last-child {
+            border-bottom: none
+        }
+
+        .as-total {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .as-trow {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15.7px
+        }
+
+        .as-trow span:last-child {
+            font-family: 'Crimson Pro', serif;
+            font-size: 18.2px;
+            font-weight: 600
+        }
+
+        @media(max-width:960px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .panel {
+                position: static
+            }
+
+            .hd {
+                flex-wrap: wrap
+            }
+        }
+
+        @media(max-width:640px) {
+            .hd {
+                padding: 12px 16px;
+            }
+
+            .main {
+                padding: 16px 10px;
+            }
+
+            .preset-bar {
+                padding: 10px 12px;
+                gap: 8px;
+            }
+
+            .p-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .cat {
+                border-radius: 10px;
+            }
+
+            .cat-hd {
+                flex-wrap: wrap;
+                padding: 12px;
+            }
+
+            .cat-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+
+            .cat-info {
+                flex: 1 1 calc(100% - 44px);
+                min-width: 0;
+            }
+
+            .cat-sub {
+                white-space: normal;
+                word-break: break-word;
+            }
+
+            .cat-right {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                padding-top: 10px;
+                margin-top: 4px;
+                border-top: 1px dashed var(--border-light);
+            }
+
+            .cat-amt-wrapper {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .cat-controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 6px;
+                margin-top: 8px;
+            }
+
+            .adj-wrap {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .legend {
+                margin-left: 0;
+                margin-top: 8px;
+                width: 100%;
+                justify-content: flex-end;
+                border-top: 1px dashed var(--border-light);
+                padding-top: 8px;
+            }
+
+            .hd-right {
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .cat-details {
+                padding: 0 12px 12px;
+            }
+
+            .sc-btns {
+                flex-wrap: wrap;
+            }
+
+            /* Summary panel */
+            .pc {
+                padding: 14px 12px;
+            }
+
+            .br-row {
+                font-size: 13px;
+            }
+
+            .t-usd {
+                font-size: 26px;
+            }
+
+            .t-krw {
+                font-size: 13px;
+            }
+
+            .dep-note {
+                font-size: 11px;
+            }
+
+            .cmp-usd {
+                font-size: 18px;
+            }
+
+            .cmp-diff {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="hd">
+        <div class="hd-left">
+            <h1>🌺 하와이 스테이 비용 계산기</h1>
+            <p>The Park on Ke'eaumoku, Honolulu &nbsp;·&nbsp; 유희·동률·주이·주하 4인 가족 &nbsp;·&nbsp; 2025년 여름</p>
+        </div>
+        <div class="hd-right">
+            <div class="dur-toggle">
+                <button class="dur-btn on" onclick="setDur('2M')">2개월&nbsp;<span
+                        style="opacity:.65;font-size: 13.3px">6/2–7/29</span></button>
+                <button class="dur-btn" onclick="setDur('3M')">3개월&nbsp;<span
+                        style="opacity:.65;font-size: 13.3px">6/2–8/27</span></button>
+            </div>
+            <div class="rate-grp">
+                <span>환율</span>
+                <input type="number" class="rate-in" id="rateIn" value="1450" oninput="updateRate(this.value)">
+                <span>원/$</span>
+            </div>
+            <div class="mode-tabs">
+                <button class="m-tab on" onclick="setMode('calc')">계산 모드</button>
+                <button class="m-tab" onclick="setMode('actual')">실제 입력</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="preset-bar">
+            <span class="preset-lbl">프리셋</span>
+            <button class="p-btn p-tight" onclick="applyPreset('tight')">🟢 전체 타이트</button>
+            <button class="p-btn p-neutral" onclick="applyPreset('neutral')">🔵 전체 중립</button>
+            <button class="p-btn p-comfort" onclick="applyPreset('comfort')">🔴 전체 여유</button>
+            <div class="legend">
+                <div class="leg-item">
+                    <div class="leg-dot" style="background:var(--tight)"></div>타이트
+                </div>
+                <div class="leg-item">
+                    <div class="leg-dot" style="background:var(--neutral)"></div>중립
+                </div>
+                <div class="leg-item">
+                    <div class="leg-dot" style="background:var(--comfort)"></div>여유
+                </div>
+            </div>
+        </div>
+
+        <!-- CALC MODE -->
+        <div id="calcMode">
+            <div class="grid">
+                <div class="cats" id="catsSection"></div>
+                <div class="panel">
+                    <div class="pc">
+                        <div class="pc-title">비용 요약</div>
+                        <div id="brRows"></div>
+                        <div class="total-sep">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                                <div style="font-size: 14.5px;font-weight:600;color:var(--txt2);padding-top:6px">총 예상 비용
+                                </div>
+                                <div style="text-align:right">
+                                    <div class="t-usd" id="totUSD">—</div>
+                                    <div class="t-krw" id="totKRW">—</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dep-note">
+                            ※ 보증금 $3,500은 퇴거 후 환불 예정 — 합계 미포함<br>
+                            ※ Punahou Summer School $5,000 ✅ 등록 완료<br>
+                            ※ 검증 기준(스펙): 1,350원/$. 현재 환율 1,450원 반영 시 수치 상이
+                        </div>
+                    </div>
+                    <div class="pc">
+                        <div class="pc-title">2개월 vs 3개월 비교</div>
+                        <div class="cmp-grid">
+                            <div class="cmp-col" id="cmp2M">
+                                <div class="cmp-dur">2개월</div>
+                                <div class="cmp-usd" id="c2u">—</div>
+                                <div class="cmp-krw" id="c2k">—</div>
+                            </div>
+                            <div class="cmp-col" id="cmp3M">
+                                <div class="cmp-dur">3개월</div>
+                                <div class="cmp-usd" id="c3u">—</div>
+                                <div class="cmp-krw" id="c3k">—</div>
+                            </div>
+                        </div>
+                        <div class="cmp-diff" id="cmpDiff">—</div>
+                    </div>
+                    <div class="pc">
+                        <div class="pc-title">항목별 비용 구성</div>
+                        <div class="chart-wrap"><canvas id="chart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTUAL MODE -->
+        <div id="actualMode" style="display:none">
+            <div class="grid">
+                <div class="act-cats" id="actSection"></div>
+                <div class="panel">
+                    <div class="pc">
+                        <div class="pc-title">실제 vs 예산 비교</div>
+                        <div id="actSumRows"></div>
+                        <div class="as-total">
+                            <div class="as-trow"><span style="color:var(--txt2)">예산 총액</span><span id="aBudget">—</span>
+                            </div>
+                            <div class="as-trow"><span style="color:var(--txt2)">실제 총액</span><span id="aReal">—</span>
+                            </div>
+                            <div class="as-trow"
+                                style="margin-top:4px;padding-top:8px;border-top:1px solid var(--border)">
+                                <span style="font-weight:600">초과 / 절감</span>
+                                <span id="aDiff" style="font-size: 21.8px">—</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── STATE ──────────────────────────────────────────────
+        let rate = 1450;
+        let dur = '2M';
+        let mode = 'calc';
+        let chart = null;
+        let actuals = {};
+        let adjs = {};
+
+        const scenarios = {
+            flight: 'neutral', education: 'neutral', car: 'neutral',
+            food: 'neutral', comm: 'neutral', misc: 'neutral',
+            travel: 'neutral', shopping: 'neutral'
+        };
+
+        const SL = { tight: '타이트', neutral: '중립', comfort: '여유' };
+        const SC_CLS = { tight: 'on-tight', neutral: 'on-neutral', comfort: 'on-comfort' };
+
+        // ── CATEGORY DATA ───────────────────────────────────────
+        const CATS = [
+            {
+                id: 'housing', name: '숙소', icon: '🏠', fixed: true,
+                desc: "The Park on Ke'eaumoku · 전기·수도·인터넷·케이블·관리비·세금 ALL-IN",
+                confirmed: true,
+                val(d) { return 3500 * (d === '2M' ? 2 : 3) },
+                det(d) {
+                    const m = d === '2M' ? 2 : 3;
+                    return [
+                        { k: '월세', v: '$3,500/월 (ALL-IN)' },
+                        { k: `${m}개월 합계`, v: `$${(3500 * m).toLocaleString()}` },
+                        { k: '포함', v: '전기·수도·인터넷·케이블·관리비·세금' },
+                    ]
+                }
+            },
+            {
+                id: 'flight', name: '항공', icon: '✈️', fixed: false,
+                desc: '유희(마일리지) + 동률 + 주이·주하 · 원화 기준',
+                confirmed: false,
+                val(d, s) {
+                    const base = 250000 + 1450000 + 1450000 + 916000 + 250000; // 4,316,000
+                    let tot = base;
+                    if (d === '3M') tot += (s === 'tight' ? 250000 : 940000);
+                    return tot / rate;
+                },
+                det(d, s) {
+                    const rows = [
+                        { k: '유희 출귀국', v: '250,000원 ✅ 마일리지+세금' },
+                        { k: '주이+주하 출국', v: '1,450,000원 ✅' },
+                        { k: '주이+주하 귀국', v: '1,450,000원' },
+                        { k: '동률 6월 (6/2~13)', v: '916,000원 ✅ 발권완료' },
+                        { k: '동률 7월 (왕복)', v: '250,000원 마일리지+세금' },
+                    ];
+                    if (d === '3M') rows.push({ k: '동률 8월', v: s === 'tight' ? '250,000원 마일리지' : '940,000원 대한항공 실구매' });
+                    const tot = (250000 + 1450000 + 1450000 + 916000 + 250000 + (d === '3M' ? (s === 'tight' ? 250000 : 940000) : 0));
+                    rows.push({ k: '항공 합계 (원화)', v: `${(tot / 10000).toLocaleString()}만원` });
+                    return rows;
+                }
+            },
+            {
+                id: 'education', name: '교육', icon: '📚', fixed: false,
+                desc: 'Punahou(확정) + Homa Art + 서핑/수영 레슨 + 유희 어학원',
+                confirmed: false,
+                val(d, s) {
+                    const surf = { tight: 0, neutral: 760, comfort: 1200 }[s];
+                    const esl = { tight: 0, neutral: 1600, comfort: 2560 }[s];
+                    return 5000 + 200 + surf + esl;
+                },
+                det(d, s) {
+                    const surf = { tight: '미수강 $0', neutral: '그룹 4회×2명 $760', comfort: '개인 3회×2명 $1,200' }[s];
+                    const esl = { tight: '미등록 $0', neutral: 'IIE STEP 오전반 4주 $1,600', comfort: 'IIE Intensive 4주 $2,560' }[s];
+                    return [
+                        { k: 'Punahou Summer School (2명)', v: '$5,000 ✅ 고정·발권완료' },
+                        { k: 'Homa Art Camp (2명)', v: '$200 고정' },
+                        { k: '서핑/수영 레슨', v: surf },
+                        { k: '유희 어학원 (ESL)', v: esl },
+                    ]
+                }
+            },
+            {
+                id: 'car', name: '렌터카 + 보험 + 주유', icon: '🚗', fixed: false,
+                desc: 'Costco Travel 시내픽업 · CDW/LDI 보험 포함 · 30일 단위',
+                confirmed: false,
+                val(d, s) {
+                    const mo = { tight: 850, neutral: 1000, comfort: 1150 }[s];
+                    return mo * (d === '2M' ? 2 : 3);
+                },
+                det(d, s) {
+                    const mo = { tight: 850, neutral: 1000, comfort: 1150 }[s];
+                    const m = d === '2M' ? 2 : 3;
+                    const car = { tight: '$750/월 (카시트 2개 포함, 보험포함)', neutral: '$850/월 (중형, 보험포함)', comfort: '$950/월 (SUV, 보험포함)' }[s];
+                    const fuel = { tight: '~$100/월', neutral: '~$150/월', comfort: '~$200/월' }[s];
+                    return [
+                        { k: '렌터카 (CDW/LDI 보험포함)', v: car },
+                        { k: '주유', v: fuel },
+                        { k: '보험 비고', v: 'CDW·LDI 포함 (하와이 필수)' },
+                        { k: `${m}개월 합계`, v: `$${(mo * m).toLocaleString()}` },
+                    ]
+                }
+            },
+            {
+                id: 'food', name: '식비', icon: '🍽️', fixed: false,
+                desc: 'Costco 장보기 · 엄마+6세 여아 2명 실거주 3인 기준 (아빠 월 8~10일)',
+                confirmed: false,
+                val(d, s) {
+                    return { tight: 1300, neutral: 1700, comfort: 2300 }[s] * (d === '2M' ? 2 : 3);
+                },
+                det(d, s) {
+                    const gr = { tight: 900, neutral: 1200, comfort: 1500 }[s];
+                    const di = { tight: 400, neutral: 500, comfort: 600 }[s];
+                    const ca = { tight: 0, neutral: 0, comfort: 200 }[s];
+                    const rows = [
+                        { k: 'Costco 장보기', v: `$${gr}/월` },
+                        { k: '저녁 외식 (3인 기준)', v: `$${di}/월` },
+                    ];
+                    if (ca) rows.push({ k: '카페/간식', v: `$${ca}/월` });
+                    return rows;
+                }
+            },
+            {
+                id: 'comm', name: '통신', icon: '📱', fixed: false,
+                desc: '성인 2명 기준',
+                confirmed: false,
+                val(d, s) {
+                    return { tight: 50, neutral: 80, comfort: 120 }[s] * (d === '2M' ? 2 : 3);
+                },
+                det(d, s) {
+                    const mo = { tight: 50, neutral: 80, comfort: 120 }[s];
+                    const method = { tight: 'eSIM (Airalo 등)', neutral: '현지 유심 2개', comfort: '현지 유심 + 로밍 혼용' }[s];
+                    return [
+                        { k: '방식', v: method },
+                        { k: '월 비용', v: `$${mo}/월` },
+                    ]
+                }
+            },
+            {
+                id: 'misc', name: '생활 잡비', icon: '🧴', fixed: false,
+                desc: '세제·선크림·생활용품·소모품 등',
+                confirmed: false,
+                val(d, s) {
+                    return { tight: 200, neutral: 350, comfort: 500 }[s] * (d === '2M' ? 2 : 3);
+                },
+                det(d, s) {
+                    return [{ k: '월 예산', v: `${{ tight: 200, neutral: 350, comfort: 500 }[s]}/월` }]
+                }
+            },
+            {
+                id: 'travel', name: '타섬 여행', icon: '🏝️', fixed: false,
+                desc: '타이트 1회 / 중립·여유 2회 · 마우이·빅아일랜드',
+                confirmed: false,
+                val(d, s) {
+                    const data = { tight: { n: 1, per: 1475, cr: 0 }, neutral: { n: 2, per: 2005, cr: 0 }, comfort: { n: 2, per: 2940, cr: 0 } }[s];
+                    return data.per * data.n - data.cr;
+                },
+                det(d, s) {
+                    const data = {
+                        tight: { n: 1, per: 1475, cr: 0, note: '집 유지 + 현지 중립' },
+                        neutral: { n: 2, per: 2005, cr: 0, note: '마우이+빅아일랜드 각 2박3일' },
+                        comfort: { n: 2, per: 2940, cr: 0, note: '리조트급 (Four Seasons Maui급)' }
+                    }[s];
+                    const rows = [
+                        { k: '여행 횟수', v: `${data.n}회 (${data.note})` },
+                        { k: '1회 비용', v: `$${data.per.toLocaleString()}` },
+                    ];
+                    if (data.cr) rows.push({ k: '조기종료 절약', v: `-$${data.cr}` });
+                    rows.push({ k: '순 여행비', v: `$${(data.per * data.n - data.cr).toLocaleString()}` });
+                    return rows;
+                }
+            },
+            {
+                id: 'insurance', name: '여행자 보험', icon: '🛡️', fixed: true,
+                desc: '4인 가족 해외 여행자 보험 (의료·배상·수하물·여행취소)',
+                confirmed: false,
+                val(d) { return d === '2M' ? 350 : 450 },
+                det(d) {
+                    return [
+                        { k: '기준', v: '4인 가족 (성인2+소아2)' },
+                        { k: '보장', v: '의료비·배상책임·수하물·여행취소' },
+                        { k: d + '개월 보험료', v: `$${d === '2M' ? 350 : 450} (고정)` },
+                    ]
+                }
+            },
+            {
+                id: 'shopping', name: '쇼핑 / 의류', icon: '🛍️', fixed: false,
+                desc: '의류·잡화·아울렛·기념품 예산',
+                confirmed: false,
+                val(d, s) {
+                    return { tight: 300, neutral: 700, comfort: 1500 }[s] * (d === '2M' ? 2 : 3);
+                },
+                det(d, s) {
+                    return [
+                        { k: '월 예산', v: `${{ tight: 300, neutral: 700, comfort: 1500 }[s]}/월` },
+                        { k: '범위', v: '의류·잡화·아울렛(Waikele)·기념품' },
+                    ]
+                }
+            },
+        ];
+
+        const COLORS = ['#C4622D', '#1A4D8A', '#2A6044', '#962224', '#B07D1A', '#6B4D8E', '#3A7D7B', '#B56820', '#4A6741', '#8B7050'];
+
+        // ── FORMAT ─────────────────────────────────────────────
+        const usd = n => '$' + Math.round(n).toLocaleString();
+        const krw = n => Math.round(n * rate / 10000).toLocaleString() + '만원';
+        const both = n => `${usd(n)} / ${krw(n)}`;
+
+        // ── CALC ───────────────────────────────────────────────
+        function catVal(cat, d) {
+            const s = cat.fixed ? 'neutral' : (scenarios[cat.id] || 'neutral');
+            return cat.val(d, s) + (adjs[cat.id] || 0);
+        }
+        function calcAll(d) {
+            let tot = 0; const br = {};
+            CATS.forEach(c => { const v = catVal(c, d); br[c.id] = v; tot += v; });
+            return { tot, br };
+        }
+
+        // ── RENDER CATEGORIES ──────────────────────────────────
+        function updateCatUI(id) {
+            const c = CATS.find(x => x.id === id);
+            if (!c) return;
+            const s = c.fixed ? 'neutral' : (scenarios[id] || 'neutral');
+            const v = catVal(c, dur);
+
+            const cu = document.getElementById('cu-' + id);
+            const ck = document.getElementById('ck-' + id);
+            if (cu) cu.textContent = usd(v);
+            if (ck) ck.textContent = krw(v);
+
+            const adjEl = document.getElementById('adj-' + id);
+            if (adjEl) {
+                const a = adjs[id] || 0;
+                adjEl.textContent = a !== 0 ? ((a > 0 ? '+' : '') + usd(a)) : '조정 없음';
+                if (a !== 0) {
+                    adjEl.style.color = a > 0 ? 'var(--comfort)' : 'var(--tight)';
+                } else {
+                    adjEl.style.color = 'var(--txt3)';
+                }
+            }
+
+            const detdEl = document.getElementById('detd-' + id);
+            if (detdEl) {
+                let details = c.det(dur, s);
+                if (adjs[id] || 0) {
+                    details.push({ k: '수동 세부조정', v: (adjs[id] > 0 ? '+' : '') + usd(adjs[id]) });
+                    details.push({ k: '최종 시뮬레이션 금액', v: usd(v) });
+                }
+                detdEl.innerHTML = details.map(d => `<div class="det-row"><span>${d.k}</span><span>${d.v}</span></div>`).join('');
+            }
+            const adjin = document.getElementById('adjin-' + id);
+            if (adjin) adjin.value = adjs[id] || 0;
+        }
+
+
+        function setAdj(id, val) {
+            var v = parseInt(val) || 0;
+            adjs[id] = v;
+            updateCatUI(id);
+            renderSummary();
+            if (mode === 'actual') renderActualSum();
+        }
+        function adjVal(id, amount) {
+
+            if (amount === 'reset') {
+                adjs[id] = 0;
+            } else {
+                adjs[id] = (adjs[id] || 0) + amount;
+            }
+            updateCatUI(id);
+            renderSummary();
+            if (mode === 'actual') renderActualSum();
+        }
+
+        function renderCats() {
+            const el = document.getElementById('catsSection');
+            el.innerHTML = '';
+            CATS.forEach(c => {
+                const s = c.fixed ? 'neutral' : (scenarios[c.id] || 'neutral');
+                const v = catVal(c, dur);
+                let details = c.det(dur, s);
+                if (adjs[c.id] || 0) {
+                    details.push({ k: '수동 세부조정', v: (adjs[c.id] > 0 ? '+' : '') + usd(adjs[c.id]) });
+                    details.push({ k: '최종 시뮬레이션 금액', v: usd(v) });
+                }
+
+                const div = document.createElement('div');
+                div.className = 'cat'; div.id = 'cat-' + c.id;
+                const ctrlHTML = c.fixed
+                    ? `<span class="badge-fixed" style="margin-right:0">금액 고정항목</span>`
+                    : `<div class="sc-btns" id="scb-${c.id}">${['tight', 'neutral', 'comfort'].map(x =>
+                        `<button class="sc-btn ${s === x ? SC_CLS[x] : ''}" onclick="event.stopPropagation(); setSc('${c.id}','${x}')">${SL[x]}</button>`
+                    ).join('')}</div>`;
+
+                const a = adjs[c.id] || 0;
+                const adjHTML = (c.fixed && c.id !== 'housing') ? '' : `
+      <div class="adj-wrap" style="margin-top: 8px; justify-content: flex-end;">
+        <div class="adj-ctrl">
+          <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', -50)">-</button>
+          <input type="number" class="adj-input" id="adjin-${c.id}" value="${a}" onclick="event.stopPropagation()" onchange="setAdj('${c.id}', this.value)" placeholder="0">
+          <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', 50)">+</button>
+        </div>
+      </div>
+    `;
+
+                const okBadge = c.confirmed ? `<span class="badge-ok">✅ 확정</span>` : '';
+                div.innerHTML = `
+      <div class="cat-hd" onclick="toggleDet('${c.id}')">
+        <div class="cat-icon">${c.icon}</div>
+        <div class="cat-info">
+          <div class="cat-name">${c.name} ${okBadge}</div>
+          <div class="cat-sub">${c.desc}</div>
+        </div>
+        <div class="cat-right">
+          <div class="cat-amt-wrapper">
+            <div class="cat-amt">
+              <div class="c-usd" id="cu-${c.id}">${usd(v)}</div>
+              <div class="c-krw" id="ck-${c.id}">${krw(v)}</div>
+            </div>
+            <span class="chevron" id="chv-${c.id}">▼</span>
+          </div>
+          <div class="cat-controls" onclick="event.stopPropagation()">
+            ${ctrlHTML}
+            ${adjHTML}
+          </div>
+        </div>
+      </div>
+      <div class="cat-details" id="det-${c.id}" style="display:none">
+        <div id="detd-${c.id}">
+          ${details.map(d => `<div class="det-row"><span>${d.k}</span><span>${d.v}</span></div>`).join('')}
+        </div>
+      </div>`;
+                el.appendChild(div);
+            });
+        }
+
+        function toggleDet(id) {
+            const el = document.getElementById('det-' + id);
+            const chv = document.getElementById('chv-' + id);
+            if (!el) return;
+            const open = el.style.display === 'block';
+            el.style.display = open ? 'none' : 'block';
+            chv.classList.toggle('open', !open);
+        }
+
+        // ── RENDER SUMMARY ─────────────────────────────────────
+        function renderSummary() {
+            const { tot, br } = calcAll(dur);
+            const brEl = document.getElementById('brRows');
+            brEl.innerHTML = CATS.map((c, i) => `
+    <div class="br-row">
+      <div class="br-lbl"><div class="br-dot" style="background:${COLORS[i]}"></div>${c.icon} ${c.name}</div>
+      <div class="br-val">${usd(br[c.id])}<div class="br-krw">${krw(br[c.id])}</div></div>
+    </div>`).join('');
+            document.getElementById('totUSD').textContent = usd(tot);
+            document.getElementById('totKRW').textContent = krw(tot);
+
+            // Comparison
+            const r2 = calcAll('2M'), r3 = calcAll('3M');
+            document.getElementById('cmp2M').className = 'cmp-col' + (dur === '2M' ? ' act' : '');
+            document.getElementById('cmp3M').className = 'cmp-col' + (dur === '3M' ? ' act' : '');
+            document.getElementById('c2u').textContent = usd(r2.tot);
+            document.getElementById('c2k').textContent = krw(r2.tot);
+            document.getElementById('c3u').textContent = usd(r3.tot);
+            document.getElementById('c3k').textContent = krw(r3.tot);
+            const diff = r3.tot - r2.tot;
+            document.getElementById('cmpDiff').innerHTML =
+                `3개월이 2개월보다 <strong>${usd(diff)}</strong> (${krw(diff)}) 추가 소요`;
+
+            renderChart(br);
+        }
+
+        // ── CHART ──────────────────────────────────────────────
+        function renderChart(br) {
+            const ctx = document.getElementById('chart').getContext('2d');
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: CATS.map(c => c.name),
+                    datasets: [{
+                        data: CATS.map(c => Math.round(br[c.id])),
+                        backgroundColor: COLORS,
+                        borderRadius: 4,
+                        borderSkipped: false,
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: ctx => ` ${usd(ctx.raw)} / ${krw(ctx.raw)}` } }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#A08870', maxRotation: 40 } },
+                        y: { grid: { color: '#E8E1D4' }, ticks: { font: { size: 9 }, color: '#A08870', callback: v => '$' + v.toLocaleString() } }
+                    }
+                }
+            });
+        }
+
+        // ── RENDER ACTUAL MODE ─────────────────────────────────
+        function renderActual() {
+            const el = document.getElementById('actSection');
+            el.innerHTML = '';
+            CATS.forEach(c => {
+                const est = catVal(c, dur);
+                const actual = (actuals[c.id] !== undefined && actuals[c.id] !== null) ? actuals[c.id] : '';
+                const variance = actual !== '' ? parseFloat(actual) - est : null;
+                const varCls = variance === null ? 'vz' : variance > 0 ? 'vp' : variance < 0 ? 'vn' : 'vz';
+                const varTxt = variance === null ? '—' : (variance > 0 ? '+' : '') + usd(variance);
+                const div = document.createElement('div');
+                div.className = 'ac';
+                div.innerHTML = `
+      <div class="ac-hd">
+        <div class="ac-name">${c.icon} ${c.name}</div>
+        <div class="ac-est">예산 ${usd(est)} / ${krw(est)}</div>
+      </div>
+      <div class="ac-body">
+        <div class="ac-iw">
+          <div class="ac-lbl">실제 지출 (USD)</div>
+          <input type="number" class="ac-in" placeholder="${Math.round(est)}"
+            value="${actual}"
+            oninput="setActual('${c.id}',this.value)">
+        </div>
+        <div>
+          <div class="ac-lbl">차이</div>
+          <div class="ac-var ${varCls}" id="var-${c.id}">${varTxt}</div>
+        </div>
+      </div>`;
+                el.appendChild(div);
+            });
+            renderActualSum();
+        }
+
+        function renderActualSum() {
+            const { tot: budget } = calcAll(dur);
+            let real = 0;
+            const rows = CATS.map(c => {
+                const est = catVal(c, dur);
+                const hasActual = actuals[c.id] !== undefined && actuals[c.id] !== '';
+                const actual = hasActual ? parseFloat(actuals[c.id]) : est;
+                real += actual;
+                const v = actual - est;
+                return { c, est, actual, v, hasActual };
+            });
+            document.getElementById('actSumRows').innerHTML = rows.map(r => `
+    <div class="as-row">
+      <span>${r.c.icon} ${r.c.name}</span>
+      <span class="${r.v > 0 ? 'vp' : r.v < 0 ? 'vn' : 'vz'}" style="font-weight:500">
+        ${r.hasActual ? usd(r.actual) + (r.v !== 0 ? ` (${r.v > 0 ? '+' : ''}${usd(r.v)})` : '') : usd(r.est) + ' (예산)'}
+      </span>
+    </div>`).join('');
+            document.getElementById('aBudget').textContent = both(budget);
+            document.getElementById('aReal').textContent = both(real);
+            const diff = real - budget;
+            const dEl = document.getElementById('aDiff');
+            dEl.className = diff > 0 ? 'vp' : diff < 0 ? 'vn' : 'vz';
+            dEl.style.fontFamily = "'Crimson Pro',serif";
+            dEl.style.fontWeight = '600';
+            dEl.style.fontSize = '18px';
+            dEl.textContent = diff === 0 ? '동일' : (diff > 0 ? '+' : '') + both(Math.abs(diff)) + (diff > 0 ? ' 초과' : ' 절감');
+        }
+
+        // ── ACTIONS ────────────────────────────────────────────
+        function setDur(d) {
+            dur = d;
+            document.querySelectorAll('.dur-btn').forEach((b, i) => b.classList.toggle('on', (i === 0) === (d === '2M')));
+            renderAll();
+        }
+        function updateRate(v) {
+            const n = parseInt(v); if (n > 0) rate = n;
+            renderAll();
+        }
+        function setSc(id, s) {
+            scenarios[id] = s;
+            // Update buttons
+            document.querySelectorAll(`#scb-${id} .sc-btn`).forEach((b, i) => {
+                const keys = ['tight', 'neutral', 'comfort'];
+                b.className = 'sc-btn' + (keys[i] === s ? ' ' + SC_CLS[keys[i]] : '');
+            });
+            updateCatUI(id);
+            renderSummary();
+            if (mode === 'actual') renderActualSum();
+        }
+        function applyPreset(s) {
+            CATS.forEach(c => {
+                if (!c.fixed) scenarios[c.id] = s;
+                adjs[c.id] = 0;
+            });
+            renderCats(); renderSummary();
+            if (mode === 'actual') renderActual();
+        }
+        function setMode(m) {
+            mode = m;
+            document.querySelectorAll('.m-tab').forEach((t, i) => t.classList.toggle('on', (i === 0) === (m === 'calc')));
+            document.getElementById('calcMode').style.display = m === 'calc' ? 'block' : 'none';
+            document.getElementById('actualMode').style.display = m === 'actual' ? 'block' : 'none';
+            if (m === 'actual') renderActual();
+        }
+        function setActual(id, v) {
+            actuals[id] = v;
+            const cat = CATS.find(c => c.id === id);
+            if (cat) {
+                const est = catVal(cat, dur);
+                const actual = v === '' ? null : parseFloat(v);
+                const variance = actual === null ? null : actual - est;
+                const el = document.getElementById('var-' + id);
+                if (el) {
+                    el.textContent = variance === null ? '—' : (variance > 0 ? '+' : '') + usd(variance);
+                    el.className = 'ac-var ' + (variance === null ? 'vz' : variance > 0 ? 'vp' : variance < 0 ? 'vn' : 'vz');
+                }
+            }
+            renderActualSum();
+        }
+        function renderAll() {
+            renderCats(); renderSummary();
+            if (mode === 'actual') renderActual();
+        }
+
+        // ── INIT ───────────────────────────────────────────────
+        renderAll();
+    </script>
+</body>
+
+</html>
