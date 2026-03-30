@@ -1089,9 +1089,9 @@
                 id: 'housing', name: '숙소', icon: '🏠', fixed: true,
                 desc: "The Park on Ke'eaumoku · 전기·수도·인터넷·케이블·관리비·세금 ALL-IN",
                 confirmed: true,
-                val(d) { return d === 'opt1' ? 6600 : 7300 },
+                val(d) { return d === 'opt1' ? 7300 : 6600 },
                 det(d) {
-                    const total = d === 'opt1' ? 6600 : 7300;
+                    const total = d === 'opt1' ? 7300 : 6600;
                     const period = d === 'opt1' ? '5/28–8/12' : '6/4–8/12';
                     return [
                         { k: '기간', v: period },
