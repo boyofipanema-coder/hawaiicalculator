@@ -1357,12 +1357,12 @@
                     ).join('')}</div>`;
 
                 const a = adjs[c.id] || 0;
-                const adjHTML = c.fixed ? '' : `
+                const adjHTML = (c.fixed && c.id !== 'housing') ? '' : `
       <div class="adj-wrap" style="margin-top: 8px; justify-content: flex-end;">
         <div class="adj-ctrl">
-          <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', -100)">-</button>
+          <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', -50)">-</button>
           <input type="number" class="adj-input" id="adjin-${c.id}" value="${a}" onclick="event.stopPropagation()" onchange="setAdj('${c.id}', this.value)" placeholder="0">
-          <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', 100)">+</button>
+          <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', 50)">+</button>
         </div>
       </div>
     `;
