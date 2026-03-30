@@ -956,14 +956,14 @@
         </div>
         <div class="hd-right">
             <div class="dur-toggle">
-                <button class="dur-btn on" onclick="setDur('2M')">2개월&nbsp;<span
-                        style="opacity:.65;font-size: 13.3px">6/2–7/29</span></button>
-                <button class="dur-btn" onclick="setDur('3M')">3개월&nbsp;<span
-                        style="opacity:.65;font-size: 13.3px">6/2–8/27</span></button>
+                <button class="dur-btn on" onclick="setDur('opt1')">opt1&nbsp;<span
+                        style="opacity:.65;font-size: 13.3px">5/28–8/12</span></button>
+                <button class="dur-btn" onclick="setDur('opt2')">opt2&nbsp;<span
+                        style="opacity:.65;font-size: 13.3px">6/4–8/12</span></button>
             </div>
             <div class="rate-grp">
                 <span>환율</span>
-                <input type="number" class="rate-in" id="rateIn" value="1450" oninput="updateRate(this.value)">
+                <input type="number" class="rate-in" id="rateIn" value="1500" oninput="updateRate(this.value)">
                 <span>원/$</span>
             </div>
             <div class="mode-tabs">
@@ -1017,15 +1017,15 @@
                         </div>
                     </div>
                     <div class="pc">
-                        <div class="pc-title">2개월 vs 3개월 비교</div>
+                        <div class="pc-title">opt1 vs opt2 비교</div>
                         <div class="cmp-grid">
                             <div class="cmp-col" id="cmp2M">
-                                <div class="cmp-dur">2개월</div>
+                                <div class="cmp-dur">opt1 (5/28–8/12)</div>
                                 <div class="cmp-usd" id="c2u">—</div>
                                 <div class="cmp-krw" id="c2k">—</div>
                             </div>
                             <div class="cmp-col" id="cmp3M">
-                                <div class="cmp-dur">3개월</div>
+                                <div class="cmp-dur">opt2 (6/4–8/12)</div>
                                 <div class="cmp-usd" id="c3u">—</div>
                                 <div class="cmp-krw" id="c3k">—</div>
                             </div>
@@ -1067,8 +1067,8 @@
 
     <script>
         // ── STATE ──────────────────────────────────────────────
-        let rate = 1450;
-        let dur = '2M';
+        let rate = 1500;
+        let dur = 'opt1';
         let mode = 'calc';
         let chart = null;
         let actuals = {};
@@ -1089,12 +1089,13 @@
                 id: 'housing', name: '숙소', icon: '🏠', fixed: true,
                 desc: "The Park on Ke'eaumoku · 전기·수도·인터넷·케이블·관리비·세금 ALL-IN",
                 confirmed: true,
-                val(d) { return 3500 * (d === '2M' ? 2 : 3) },
+                val(d) { return d === 'opt1' ? 6600 : 7300 },
                 det(d) {
-                    const m = d === '2M' ? 2 : 3;
+                    const total = d === 'opt1' ? 6600 : 7300;
+                    const period = d === 'opt1' ? '5/28–8/12' : '6/4–8/12';
                     return [
-                        { k: '월세', v: '$3,500/월 (ALL-IN)' },
-                        { k: `${m}개월 합계`, v: `$${(3500 * m).toLocaleString()}` },
+                        { k: '기간', v: period },
+                        { k: '합계 (2개월 기준)', v: `$${total.toLocaleString()}` },
                         { k: '포함', v: '전기·수도·인터넷·케이블·관리비·세금' },
                     ]
                 }
@@ -1104,23 +1105,13 @@
                 desc: '유희(마일리지) + 동률 + 주이·주하 · 원화 기준',
                 confirmed: false,
                 val(d, s) {
-                    const base = 250000 + 1450000 + 1450000 + 916000 + 250000; // 4,316,000
-                    let tot = base;
-                    if (d === '3M') tot += (s === 'tight' ? 250000 : 940000);
-                    return tot / rate;
+                    return 1900000 / rate;
                 },
                 det(d, s) {
-                    const rows = [
-                        { k: '유희 출귀국', v: '250,000원 ✅ 마일리지+세금' },
-                        { k: '주이+주하 출국', v: '1,450,000원 ✅' },
-                        { k: '주이+주하 귀국', v: '1,450,000원' },
-                        { k: '동률 6월 (6/2~13)', v: '916,000원 ✅ 발권완료' },
-                        { k: '동률 7월 (왕복)', v: '250,000원 마일리지+세금' },
+                    return [
+                        { k: '항공 합계 (원화)', v: '1,900,000원' },
+                        { k: '달러 환산', v: `$${Math.round(1900000 / rate).toLocaleString()} (환율 ${rate.toLocaleString()}원/$)` },
                     ];
-                    if (d === '3M') rows.push({ k: '동률 8월', v: s === 'tight' ? '250,000원 마일리지' : '940,000원 대한항공 실구매' });
-                    const tot = (250000 + 1450000 + 1450000 + 916000 + 250000 + (d === '3M' ? (s === 'tight' ? 250000 : 940000) : 0));
-                    rows.push({ k: '항공 합계 (원화)', v: `${(tot / 10000).toLocaleString()}만원` });
-                    return rows;
                 }
             },
             {
@@ -1149,11 +1140,11 @@
                 confirmed: false,
                 val(d, s) {
                     const mo = { tight: 850, neutral: 1000, comfort: 1150 }[s];
-                    return mo * (d === '2M' ? 2 : 3);
+                    return mo * 2;
                 },
                 det(d, s) {
                     const mo = { tight: 850, neutral: 1000, comfort: 1150 }[s];
-                    const m = d === '2M' ? 2 : 3;
+                    const m = 2;
                     const car = { tight: '$750/월 (카시트 2개 포함, 보험포함)', neutral: '$850/월 (중형, 보험포함)', comfort: '$950/월 (SUV, 보험포함)' }[s];
                     const fuel = { tight: '~$100/월', neutral: '~$150/월', comfort: '~$200/월' }[s];
                     return [
@@ -1169,7 +1160,7 @@
                 desc: 'Costco 장보기 · 엄마+6세 여아 2명 실거주 3인 기준 (아빠 월 8~10일)',
                 confirmed: false,
                 val(d, s) {
-                    return { tight: 1300, neutral: 1700, comfort: 2300 }[s] * (d === '2M' ? 2 : 3);
+                    return { tight: 1300, neutral: 1700, comfort: 2300 }[s] * 2;
                 },
                 det(d, s) {
                     const gr = { tight: 900, neutral: 1200, comfort: 1500 }[s];
@@ -1188,7 +1179,7 @@
                 desc: '성인 2명 기준',
                 confirmed: false,
                 val(d, s) {
-                    return { tight: 50, neutral: 80, comfort: 120 }[s] * (d === '2M' ? 2 : 3);
+                    return { tight: 50, neutral: 80, comfort: 120 }[s] * 2;
                 },
                 det(d, s) {
                     const mo = { tight: 50, neutral: 80, comfort: 120 }[s];
@@ -1204,7 +1195,7 @@
                 desc: '세제·선크림·생활용품·소모품 등',
                 confirmed: false,
                 val(d, s) {
-                    return { tight: 200, neutral: 350, comfort: 500 }[s] * (d === '2M' ? 2 : 3);
+                    return { tight: 200, neutral: 350, comfort: 500 }[s] * 2;
                 },
                 det(d, s) {
                     return [{ k: '월 예산', v: `${{ tight: 200, neutral: 350, comfort: 500 }[s]}/월` }]
@@ -1215,14 +1206,14 @@
                 desc: '타이트 1회 / 중립·여유 2회 · 마우이·빅아일랜드',
                 confirmed: false,
                 val(d, s) {
-                    const data = { tight: { n: 1, per: 1475, cr: 0 }, neutral: { n: 2, per: 2005, cr: 0 }, comfort: { n: 2, per: 2940, cr: 0 } }[s];
+                    const data = { tight: { n: 1, per: 1000, cr: 0 }, neutral: { n: 2, per: 1000, cr: 0 }, comfort: { n: 2, per: 1500, cr: 0 } }[s];
                     return data.per * data.n - data.cr;
                 },
                 det(d, s) {
                     const data = {
-                        tight: { n: 1, per: 1475, cr: 0, note: '집 유지 + 현지 중립' },
-                        neutral: { n: 2, per: 2005, cr: 0, note: '마우이+빅아일랜드 각 2박3일' },
-                        comfort: { n: 2, per: 2940, cr: 0, note: '리조트급 (Four Seasons Maui급)' }
+                        tight: { n: 1, per: 1000, cr: 0, note: '집 유지 + 현지 중립' },
+                        neutral: { n: 2, per: 1000, cr: 0, note: '마우이+빅아일랜드 각 2박3일 (기준 ₩3,000,000)' },
+                        comfort: { n: 2, per: 1500, cr: 0, note: '리조트급 (Four Seasons Maui급)' }
                     }[s];
                     const rows = [
                         { k: '여행 횟수', v: `${data.n}회 (${data.note})` },
@@ -1237,12 +1228,12 @@
                 id: 'insurance', name: '여행자 보험', icon: '🛡️', fixed: true,
                 desc: '4인 가족 해외 여행자 보험 (의료·배상·수하물·여행취소)',
                 confirmed: false,
-                val(d) { return d === '2M' ? 350 : 450 },
+                val(d) { return 350 },
                 det(d) {
                     return [
                         { k: '기준', v: '4인 가족 (성인2+소아2)' },
                         { k: '보장', v: '의료비·배상책임·수하물·여행취소' },
-                        { k: d + '개월 보험료', v: `$${d === '2M' ? 350 : 450} (고정)` },
+                        { k: '2개월 보험료', v: '$350 (고정)' },
                     ]
                 }
             },
@@ -1251,7 +1242,7 @@
                 desc: '의류·잡화·아울렛·기념품 예산',
                 confirmed: false,
                 val(d, s) {
-                    return { tight: 300, neutral: 700, comfort: 1500 }[s] * (d === '2M' ? 2 : 3);
+                    return { tight: 300, neutral: 700, comfort: 1500 }[s] * 2;
                 },
                 det(d, s) {
                     return [
@@ -1420,16 +1411,16 @@
             document.getElementById('totKRW').textContent = krw(tot);
 
             // Comparison
-            const r2 = calcAll('2M'), r3 = calcAll('3M');
-            document.getElementById('cmp2M').className = 'cmp-col' + (dur === '2M' ? ' act' : '');
-            document.getElementById('cmp3M').className = 'cmp-col' + (dur === '3M' ? ' act' : '');
+            const r2 = calcAll('opt1'), r3 = calcAll('opt2');
+            document.getElementById('cmp2M').className = 'cmp-col' + (dur === 'opt1' ? ' act' : '');
+            document.getElementById('cmp3M').className = 'cmp-col' + (dur === 'opt2' ? ' act' : '');
             document.getElementById('c2u').textContent = usd(r2.tot);
             document.getElementById('c2k').textContent = krw(r2.tot);
             document.getElementById('c3u').textContent = usd(r3.tot);
             document.getElementById('c3k').textContent = krw(r3.tot);
             const diff = r3.tot - r2.tot;
             document.getElementById('cmpDiff').innerHTML =
-                `3개월이 2개월보다 <strong>${usd(diff)}</strong> (${krw(diff)}) 추가 소요`;
+                `opt2가 opt1보다 <strong>${usd(Math.abs(diff))}</strong> (${krw(Math.abs(diff))}) ${diff > 0 ? '추가 소요' : '절감'}`;
 
             renderChart(br);
         }
@@ -1529,7 +1520,7 @@
         // ── ACTIONS ────────────────────────────────────────────
         function setDur(d) {
             dur = d;
-            document.querySelectorAll('.dur-btn').forEach((b, i) => b.classList.toggle('on', (i === 0) === (d === '2M')));
+            document.querySelectorAll('.dur-btn').forEach((b, i) => b.classList.toggle('on', (i === 0) === (d === 'opt1')));
             renderAll();
         }
         function updateRate(v) {
