@@ -31,6 +31,10 @@
             --neutral-bg: #D8E9F8;
             --comfort: #962224;
             --comfort-bg: #FADDDE;
+            --dongryool: #1A4D8A;
+            --dongryool-bg: #D8E9F8;
+            --yuhee: #7B3F8A;
+            --yuhee-bg: #F0E0F8;
             --shadow: 0 1px 4px rgba(37, 24, 8, .08);
             --shadow-md: 0 4px 16px rgba(37, 24, 8, .10);
             --r: 10px;
@@ -46,7 +50,7 @@
         html,
         body {
             overflow-x: hidden;
-            width: 100%;
+            width: 100%
         }
 
         body {
@@ -89,32 +93,6 @@
             align-items: center;
             gap: 12px;
             flex-wrap: wrap
-        }
-
-        .dur-toggle {
-            display: flex;
-            background: var(--card2);
-            border: 1.5px solid var(--border);
-            border-radius: var(--r);
-            overflow: hidden
-        }
-
-        .dur-btn {
-            padding: 7px 16px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            font-family: 'Noto Sans KR', sans-serif;
-            font-size: 14.5px;
-            font-weight: 500;
-            color: var(--txt2);
-            transition: all .15s;
-            white-space: nowrap
-        }
-
-        .dur-btn.on {
-            background: var(--accent);
-            color: #fff
         }
 
         .rate-grp {
@@ -470,25 +448,20 @@
             flex-direction: column;
             align-items: flex-end;
             gap: 6px;
-            cursor: default;
+            cursor: default
         }
-
 
         .adj-wrap {
             margin-top: 8px;
             display: flex;
             justify-content: flex-end;
-            align-items: center;
-        }
-
-        .adj-lbl {
-            display: none;
+            align-items: center
         }
 
         .adj-ctrl {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 5px
         }
 
         .adj-input {
@@ -500,12 +473,12 @@
             font-family: 'Noto Sans KR', sans-serif;
             font-size: 13px;
             color: var(--txt);
-            background: var(--bg);
+            background: var(--bg)
         }
 
         .adj-input:focus {
             outline: none;
-            border-color: var(--accent);
+            border-color: var(--accent)
         }
 
         .adj-btn {
@@ -519,12 +492,12 @@
             font-weight: 500;
             color: var(--txt2);
             transition: all 0.15s;
-            line-height: 1;
+            line-height: 1
         }
 
         .adj-btn:hover {
             background: var(--border-light);
-            color: var(--txt);
+            color: var(--txt)
         }
 
         /* RIGHT PANEL */
@@ -534,7 +507,7 @@
             display: flex;
             flex-direction: column;
             gap: 14px;
-            min-width: 0;
+            min-width: 0
         }
 
         .pc {
@@ -544,7 +517,7 @@
             padding: 18px;
             box-shadow: var(--shadow-md);
             overflow: hidden;
-            word-break: break-word;
+            word-break: break-word
         }
 
         .pc-title {
@@ -625,66 +598,555 @@
             line-height: 1.5
         }
 
-        /* COMPARISON */
-        .cmp-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px
-        }
-
-        .cmp-col {
-            background: var(--bg);
-            border-radius: var(--r);
-            padding: 11px;
-            text-align: center;
-            border: 1.5px solid transparent;
-            transition: all .2s
-        }
-
-        .cmp-col.act {
-            background: var(--accent-l);
-            border-color: var(--accent)
-        }
-
-        .cmp-dur {
-            font-size: 12.1px;
-            font-weight: 600;
-            color: var(--txt3);
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            margin-bottom: 5px
-        }
-
-        .cmp-usd {
-            font-family: 'Crimson Pro', serif;
-            font-size: 24.2px;
-            font-weight: 600;
-            color: var(--txt)
-        }
-
-        .cmp-krw {
-            font-size: 13.3px;
-            color: var(--txt2);
-            margin-top: 2px
-        }
-
-        .cmp-diff {
-            margin-top: 10px;
-            padding: 7px 10px;
-            background: var(--bg);
-            border-radius: 7px;
-            font-size: 13.3px;
-            color: var(--txt2);
-            text-align: center
-        }
-
         /* CHART */
         .chart-wrap {
             height: 190px;
             position: relative
         }
 
-        /* ACTUAL MODE */
+        /* ── EXPENSE LOG MODE ─────────────────────────────────── */
+        .log-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .log-filters {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .filter-sel {
+            padding: 7px 10px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--r);
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 14px;
+            color: var(--txt2);
+            background: var(--card);
+            cursor: pointer;
+        }
+
+        .filter-sel:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        .btn-add {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 18px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: var(--r);
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background .15s;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-add:hover {
+            background: var(--accent-d)
+        }
+
+        .btn-refresh {
+            padding: 9px 14px;
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r);
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            color: var(--txt2);
+            transition: all .15s;
+        }
+
+        .btn-refresh:hover {
+            background: var(--bg2)
+        }
+
+        /* Expense list */
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .exp-group {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .exp-group-hd {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 16px;
+            background: var(--card2);
+            border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+        }
+
+        .exp-group-left {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .exp-group-icon {
+            font-size: 18px
+        }
+
+        .exp-group-name {
+            font-size: 15px;
+            font-weight: 600
+        }
+
+        .exp-group-right {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .exp-group-total {
+            font-family: 'Crimson Pro', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent)
+        }
+
+        .exp-group-budget {
+            font-size: 12.5px;
+            color: var(--txt3)
+        }
+
+        .exp-group-bar {
+            width: 70px;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            overflow: hidden
+        }
+
+        .exp-group-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width .3s
+        }
+
+        .exp-items {
+            padding: 4px 0 8px
+        }
+
+        .exp-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            border-bottom: 1px dashed var(--border-light);
+            transition: background .1s;
+        }
+
+        .exp-item:last-child {
+            border-bottom: none
+        }
+
+        .exp-item:hover {
+            background: var(--bg)
+        }
+
+        .exp-date {
+            font-size: 12.5px;
+            color: var(--txt3);
+            min-width: 52px;
+            flex-shrink: 0
+        }
+
+        .exp-payer-badge {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 20px;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .payer-dongryool {
+            background: var(--dongryool-bg);
+            color: var(--dongryool)
+        }
+
+        .payer-yuhee {
+            background: var(--yuhee-bg);
+            color: var(--yuhee)
+        }
+
+        .exp-desc {
+            flex: 1;
+            font-size: 14px;
+            color: var(--txt);
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .exp-memo {
+            font-size: 12px;
+            color: var(--txt3);
+            margin-top: 1px
+        }
+
+        .exp-amount {
+            font-family: 'Crimson Pro', serif;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--txt);
+            text-align: right;
+            flex-shrink: 0
+        }
+
+        .exp-amount-krw {
+            font-size: 11.5px;
+            color: var(--txt3)
+        }
+
+        .exp-actions {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0
+        }
+
+        .exp-act-btn {
+            padding: 3px 8px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            background: transparent;
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--txt3);
+            transition: all .12s;
+        }
+
+        .exp-act-btn:hover {
+            color: var(--txt);
+            border-color: var(--txt3)
+        }
+
+        .exp-act-btn.del:hover {
+            color: var(--comfort);
+            border-color: var(--comfort)
+        }
+
+        .exp-empty {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--txt3);
+            font-size: 14.5px;
+        }
+
+        .exp-empty-icon {
+            font-size: 36px;
+            margin-bottom: 10px
+        }
+
+        /* Log summary panel */
+        .log-panel {
+            position: sticky;
+            top: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px
+        }
+
+        .person-block {
+            padding: 12px 0
+        }
+
+        .person-name {
+            font-size: 13.3px;
+            font-weight: 700;
+            letter-spacing: .04em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        .person-amt {
+            font-family: 'Crimson Pro', serif;
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1
+        }
+
+        .person-krw {
+            font-size: 13px;
+            color: var(--txt3);
+            margin-top: 2px
+        }
+
+        .person-sep {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 12px 0
+        }
+
+        .log-cat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            font-size: 13.5px;
+            border-bottom: 1px dashed var(--border-light)
+        }
+
+        .log-cat-row:last-child {
+            border-bottom: none
+        }
+
+        .log-cat-lbl {
+            color: var(--txt2);
+            display: flex;
+            align-items: center;
+            gap: 5px
+        }
+
+        .log-cat-val {
+            font-weight: 500
+        }
+
+        .vs-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .vs-label {
+            font-size: 12.5px;
+            color: var(--txt3);
+            min-width: 36px
+        }
+
+        .vs-track {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden
+        }
+
+        .vs-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width .4s
+        }
+
+        .vs-pct {
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 36px;
+            text-align: right
+        }
+
+        /* MODAL */
+        .modal-bg {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(37, 24, 8, .45);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-bg.open {
+            display: flex
+        }
+
+        .modal {
+            background: var(--card);
+            border-radius: var(--r-lg);
+            padding: 28px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 8px 40px rgba(37, 24, 8, .18);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px
+        }
+
+        .form-row {
+            margin-bottom: 14px
+        }
+
+        .form-lbl {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--txt2);
+            margin-bottom: 5px;
+            display: block
+        }
+
+        .form-in {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15px;
+            color: var(--txt);
+            background: var(--bg);
+            transition: border .15s;
+        }
+
+        .form-in:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        .payer-toggle {
+            display: flex;
+            gap: 8px
+        }
+
+        .payer-opt {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14.5px;
+            font-weight: 600;
+            background: var(--bg);
+            transition: all .15s;
+        }
+
+        .payer-opt.sel-dongryool {
+            border-color: var(--dongryool);
+            background: var(--dongryool-bg);
+            color: var(--dongryool)
+        }
+
+        .payer-opt.sel-yuhee {
+            border-color: var(--yuhee);
+            background: var(--yuhee-bg);
+            color: var(--yuhee)
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 11px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            color: var(--txt2);
+            transition: all .15s
+        }
+
+        .btn-cancel:hover {
+            background: var(--card2)
+        }
+
+        .btn-save {
+            flex: 2;
+            padding: 11px;
+            border: none;
+            border-radius: 8px;
+            background: var(--accent);
+            color: #fff;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background .15s
+        }
+
+        .btn-save:hover {
+            background: var(--accent-d)
+        }
+
+        .btn-save:disabled {
+            background: var(--txt3);
+            cursor: not-allowed
+        }
+
+        /* API 설정 배너 */
+        .api-banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background: #FFF3CD;
+            border: 1.5px solid #FFD66B;
+            border-radius: var(--r);
+            font-size: 13.5px;
+            color: #7A5800;
+            margin-bottom: 14px;
+        }
+
+        .api-banner a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--txt);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all .3s;
+            z-index: 2000;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0)
+        }
+
+        /* ACTUAL MODE (이전 방식 유지) */
         .act-cats {
             display: flex;
             flex-direction: column;
@@ -772,7 +1234,6 @@
             color: var(--txt3)
         }
 
-        /* ACTUAL SUMMARY */
         .as-row {
             display: flex;
             justify-content: space-between;
@@ -806,12 +1267,16 @@
             font-weight: 600
         }
 
+        /* Responsive */
         @media(max-width:960px) {
-            .grid {
+
+            .grid,
+            .log-grid {
                 grid-template-columns: 1fr
             }
 
-            .panel {
+            .panel,
+            .log-panel {
                 position: static
             }
 
@@ -820,48 +1285,55 @@
             }
         }
 
+        .log-grid {
+            display: grid;
+            grid-template-columns: 1fr minmax(0, 340px);
+            gap: 20px;
+            align-items: start
+        }
+
         @media(max-width:640px) {
             .hd {
-                padding: 12px 16px;
+                padding: 12px 16px
             }
 
             .main {
-                padding: 16px 10px;
+                padding: 16px 10px
             }
 
             .preset-bar {
                 padding: 10px 12px;
-                gap: 8px;
+                gap: 8px
             }
 
             .p-btn {
                 padding: 6px 12px;
-                font-size: 12px;
+                font-size: 12px
             }
 
             .cat {
-                border-radius: 10px;
+                border-radius: 10px
             }
 
             .cat-hd {
                 flex-wrap: wrap;
-                padding: 12px;
+                padding: 12px
             }
 
             .cat-icon {
                 width: 30px;
                 height: 30px;
-                font-size: 14px;
+                font-size: 14px
             }
 
             .cat-info {
                 flex: 1 1 calc(100% - 44px);
-                min-width: 0;
+                min-width: 0
             }
 
             .cat-sub {
                 white-space: normal;
-                word-break: break-word;
+                word-break: break-word
             }
 
             .cat-right {
@@ -870,14 +1342,14 @@
                 align-items: stretch;
                 padding-top: 10px;
                 margin-top: 4px;
-                border-top: 1px dashed var(--border-light);
+                border-top: 1px dashed var(--border-light)
             }
 
             .cat-amt-wrapper {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                width: 100%;
+                width: 100%
             }
 
             .cat-controls {
@@ -885,12 +1357,12 @@
                 flex-wrap: wrap;
                 align-items: center;
                 gap: 6px;
-                margin-top: 8px;
+                margin-top: 8px
             }
 
             .adj-wrap {
                 width: 100%;
-                justify-content: flex-start;
+                justify-content: flex-start
             }
 
             .legend {
@@ -899,49 +1371,58 @@
                 width: 100%;
                 justify-content: flex-end;
                 border-top: 1px dashed var(--border-light);
-                padding-top: 8px;
+                padding-top: 8px
             }
 
             .hd-right {
                 justify-content: space-between;
-                width: 100%;
+                width: 100%
             }
 
             .cat-details {
-                padding: 0 12px 12px;
+                padding: 0 12px 12px
             }
 
             .sc-btns {
-                flex-wrap: wrap;
+                flex-wrap: wrap
             }
 
-            /* Summary panel */
             .pc {
-                padding: 14px 12px;
+                padding: 14px 12px
             }
 
             .br-row {
-                font-size: 13px;
+                font-size: 13px
             }
 
             .t-usd {
-                font-size: 26px;
+                font-size: 26px
             }
 
             .t-krw {
-                font-size: 13px;
+                font-size: 13px
             }
 
             .dep-note {
-                font-size: 11px;
+                font-size: 11px
             }
 
-            .cmp-usd {
-                font-size: 18px;
+            .log-grid {
+                grid-template-columns: 1fr
             }
 
-            .cmp-diff {
-                font-size: 11px;
+            .modal {
+                padding: 20px 16px
+            }
+
+            .exp-item {
+                flex-wrap: wrap;
+                gap: 6px
+            }
+
+            .exp-desc {
+                min-width: 100%;
+                white-space: normal
             }
         }
     </style>
@@ -952,15 +1433,9 @@
     <div class="hd">
         <div class="hd-left">
             <h1>🌺 하와이 스테이 비용 계산기</h1>
-            <p>The Park on Ke'eaumoku, Honolulu &nbsp;·&nbsp; 유희·동률·주이·주하 4인 가족 &nbsp;·&nbsp; 2025년 여름</p>
+            <p>The Park on Ke'eaumoku, Honolulu &nbsp;·&nbsp; 유희·동률·주이·주하 4인 가족 &nbsp;·&nbsp; 2025. 5/28 – 8/12</p>
         </div>
         <div class="hd-right">
-            <div class="dur-toggle">
-                <button class="dur-btn on" onclick="setDur('opt1')">opt1&nbsp;<span
-                        style="opacity:.65;font-size: 13.3px">5/28–8/12</span></button>
-                <button class="dur-btn" onclick="setDur('opt2')">opt2&nbsp;<span
-                        style="opacity:.65;font-size: 13.3px">6/4–8/12</span></button>
-            </div>
             <div class="rate-grp">
                 <span>환율</span>
                 <input type="number" class="rate-in" id="rateIn" value="1500" oninput="updateRate(this.value)">
@@ -968,13 +1443,13 @@
             </div>
             <div class="mode-tabs">
                 <button class="m-tab on" onclick="setMode('calc')">계산 모드</button>
-                <button class="m-tab" onclick="setMode('actual')">실제 입력</button>
+                <button class="m-tab" onclick="setMode('log')">지출 기록</button>
             </div>
         </div>
     </div>
 
     <div class="main">
-        <div class="preset-bar">
+        <div class="preset-bar" id="presetBar">
             <span class="preset-lbl">프리셋</span>
             <button class="p-btn p-tight" onclick="applyPreset('tight')">🟢 전체 타이트</button>
             <button class="p-btn p-neutral" onclick="applyPreset('neutral')">🔵 전체 중립</button>
@@ -1017,22 +1492,6 @@
                         </div>
                     </div>
                     <div class="pc">
-                        <div class="pc-title">opt1 vs opt2 비교</div>
-                        <div class="cmp-grid">
-                            <div class="cmp-col" id="cmp2M">
-                                <div class="cmp-dur">opt1 (5/28–8/12)</div>
-                                <div class="cmp-usd" id="c2u">—</div>
-                                <div class="cmp-krw" id="c2k">—</div>
-                            </div>
-                            <div class="cmp-col" id="cmp3M">
-                                <div class="cmp-dur">opt2 (6/4–8/12)</div>
-                                <div class="cmp-usd" id="c3u">—</div>
-                                <div class="cmp-krw" id="c3k">—</div>
-                            </div>
-                        </div>
-                        <div class="cmp-diff" id="cmpDiff">—</div>
-                    </div>
-                    <div class="pc">
                         <div class="pc-title">항목별 비용 구성</div>
                         <div class="chart-wrap"><canvas id="chart"></canvas></div>
                     </div>
@@ -1040,39 +1499,108 @@
             </div>
         </div>
 
-        <!-- ACTUAL MODE -->
-        <div id="actualMode" style="display:none">
-            <div class="grid">
-                <div class="act-cats" id="actSection"></div>
-                <div class="panel">
-                    <div class="pc">
-                        <div class="pc-title">실제 vs 예산 비교</div>
-                        <div id="actSumRows"></div>
-                        <div class="as-total">
-                            <div class="as-trow"><span style="color:var(--txt2)">예산 총액</span><span id="aBudget">—</span>
-                            </div>
-                            <div class="as-trow"><span style="color:var(--txt2)">실제 총액</span><span id="aReal">—</span>
-                            </div>
-                            <div class="as-trow"
-                                style="margin-top:4px;padding-top:8px;border-top:1px solid var(--border)">
-                                <span style="font-weight:600">초과 / 절감</span>
-                                <span id="aDiff" style="font-size: 21.8px">—</span>
-                            </div>
+        <!-- LOG MODE -->
+        <div id="logMode" style="display:none">
+            <div id="apiBanner" class="api-banner" style="display:none">
+                ⚠️ API 미연결 — Cloudflare Worker 배포 후 <strong id="apiBannerUrl"></strong>에 API URL을 설정하세요.
+                배포 전까지는 <strong>로컬 임시 저장</strong>으로 동작합니다.
+            </div>
+            <div class="log-grid">
+                <div>
+                    <div class="log-toolbar">
+                        <div class="log-filters">
+                            <select class="filter-sel" id="filterCat" onchange="renderLog()">
+                                <option value="">전체 카테고리</option>
+                            </select>
+                            <select class="filter-sel" id="filterPayer" onchange="renderLog()">
+                                <option value="">전체 결제자</option>
+                                <option value="dongryool">동률</option>
+                                <option value="yuhee">유희</option>
+                            </select>
                         </div>
+                        <button class="btn-refresh" onclick="loadExpenses()" title="새로고침">↻</button>
+                        <button class="btn-add" onclick="openModal()">+ 지출 추가</button>
+                    </div>
+                    <div class="exp-list" id="expList"></div>
+                </div>
+                <div class="log-panel">
+                    <div class="pc">
+                        <div class="pc-title">지출 현황</div>
+                        <div id="logSummary"></div>
+                    </div>
+                    <div class="pc">
+                        <div class="pc-title">결제자별</div>
+                        <div id="payerSummary"></div>
+                    </div>
+                    <div class="pc">
+                        <div class="pc-title">예산 대비 실지출</div>
+                        <div id="budgetVsActual"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ADD/EDIT EXPENSE MODAL -->
+    <div class="modal-bg" id="modalBg" onclick="closeModalBg(event)">
+        <div class="modal">
+            <div class="modal-title" id="modalTitle">지출 추가</div>
+            <input type="hidden" id="editId">
+
+            <div class="form-row">
+                <label class="form-lbl">날짜</label>
+                <input type="date" class="form-in" id="fDate">
+            </div>
+            <div class="form-row">
+                <label class="form-lbl">카테고리</label>
+                <select class="form-in" id="fCat"></select>
+            </div>
+            <div class="form-row">
+                <label class="form-lbl">내용</label>
+                <input type="text" class="form-in" id="fDesc" placeholder="예: Costco 장보기, 외식 등">
+            </div>
+            <div class="form-row">
+                <label class="form-lbl">금액 (USD $)</label>
+                <input type="number" class="form-in" id="fAmt" placeholder="0" min="0" step="0.01">
+            </div>
+            <div class="form-row">
+                <label class="form-lbl">결제자</label>
+                <div class="payer-toggle">
+                    <div class="payer-opt" id="payerDR" onclick="selectPayer('dongryool')">동률</div>
+                    <div class="payer-opt" id="payerYH" onclick="selectPayer('yuhee')">유희</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <label class="form-lbl">메모 (선택)</label>
+                <input type="text" class="form-in" id="fMemo" placeholder="추가 메모">
+            </div>
+
+            <div class="modal-btns">
+                <button class="btn-cancel" onclick="closeModal()">취소</button>
+                <button class="btn-save" id="btnSave" onclick="saveExpense()">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
     <script>
+        // ── CONFIG ──────────────────────────────────────────────
+        // Cloudflare Worker 배포 후 여기에 URL 입력
+        // 예: const API = 'https://hawaii-expenses.your-subdomain.workers.dev';
+        const API = 'https://hawaiicalculator.boyofipanema.workers.dev';
+
         // ── STATE ──────────────────────────────────────────────
         let rate = 1500;
-        let dur = 'opt1';
+        const dur = 'opt1';
         let mode = 'calc';
         let chart = null;
         let actuals = {};
         let adjs = {};
+        let expenses = [];
+        let selectedPayer = '';
+        let editingId = null;
 
         const scenarios = {
             flight: 'neutral', education: 'neutral', car: 'neutral',
@@ -1089,13 +1617,11 @@
                 id: 'housing', name: '숙소', icon: '🏠', fixed: true,
                 desc: "The Park on Ke'eaumoku · 전기·수도·인터넷·케이블·관리비·세금 ALL-IN",
                 confirmed: true,
-                val(d) { return d === 'opt1' ? 7300 : 6600 },
+                val(d) { return 7300 },
                 det(d) {
-                    const total = d === 'opt1' ? 7300 : 6600;
-                    const period = d === 'opt1' ? '5/28–8/12' : '6/4–8/12';
                     return [
-                        { k: '기간', v: period },
-                        { k: '합계 (2개월 기준)', v: `$${total.toLocaleString()}` },
+                        { k: '기간', v: '5/28–8/12' },
+                        { k: '합계 (2개월 기준)', v: '$7,300' },
                         { k: '포함', v: '전기·수도·인터넷·케이블·관리비·세금' },
                     ]
                 }
@@ -1104,9 +1630,7 @@
                 id: 'flight', name: '항공', icon: '✈️', fixed: false,
                 desc: '유희(마일리지) + 동률 + 주이·주하 · 원화 기준',
                 confirmed: false,
-                val(d, s) {
-                    return 1900000 / rate;
-                },
+                val(d, s) { return 1900000 / rate },
                 det(d, s) {
                     return [
                         { k: '항공 합계 (원화)', v: '1,900,000원' },
@@ -1144,14 +1668,13 @@
                 },
                 det(d, s) {
                     const mo = { tight: 850, neutral: 1000, comfort: 1150 }[s];
-                    const m = 2;
                     const car = { tight: '$750/월 (카시트 2개 포함, 보험포함)', neutral: '$850/월 (중형, 보험포함)', comfort: '$950/월 (SUV, 보험포함)' }[s];
                     const fuel = { tight: '~$100/월', neutral: '~$150/월', comfort: '~$200/월' }[s];
                     return [
                         { k: '렌터카 (CDW/LDI 보험포함)', v: car },
                         { k: '주유', v: fuel },
                         { k: '보험 비고', v: 'CDW·LDI 포함 (하와이 필수)' },
-                        { k: `${m}개월 합계`, v: `$${(mo * m).toLocaleString()}` },
+                        { k: `2개월 합계`, v: `$${(mo * 2).toLocaleString()}` },
                     ]
                 }
             },
@@ -1159,9 +1682,7 @@
                 id: 'food', name: '식비', icon: '🍽️', fixed: false,
                 desc: 'Costco 장보기 · 엄마+6세 여아 2명 실거주 3인 기준 (아빠 월 8~10일)',
                 confirmed: false,
-                val(d, s) {
-                    return { tight: 1300, neutral: 1700, comfort: 2300 }[s] * 2;
-                },
+                val(d, s) { return { tight: 1300, neutral: 1700, comfort: 2300 }[s] * 2 },
                 det(d, s) {
                     const gr = { tight: 900, neutral: 1200, comfort: 1500 }[s];
                     const di = { tight: 400, neutral: 500, comfort: 600 }[s];
@@ -1178,9 +1699,7 @@
                 id: 'comm', name: '통신', icon: '📱', fixed: false,
                 desc: '성인 2명 기준',
                 confirmed: false,
-                val(d, s) {
-                    return { tight: 50, neutral: 80, comfort: 120 }[s] * 2;
-                },
+                val(d, s) { return { tight: 50, neutral: 80, comfort: 120 }[s] * 2 },
                 det(d, s) {
                     const mo = { tight: 50, neutral: 80, comfort: 120 }[s];
                     const method = { tight: 'eSIM (Airalo 등)', neutral: '현지 유심 2개', comfort: '현지 유심 + 로밍 혼용' }[s];
@@ -1194,34 +1713,28 @@
                 id: 'misc', name: '생활 잡비', icon: '🧴', fixed: false,
                 desc: '세제·선크림·생활용품·소모품 등',
                 confirmed: false,
-                val(d, s) {
-                    return { tight: 200, neutral: 350, comfort: 500 }[s] * 2;
-                },
-                det(d, s) {
-                    return [{ k: '월 예산', v: `${{ tight: 200, neutral: 350, comfort: 500 }[s]}/월` }]
-                }
+                val(d, s) { return { tight: 200, neutral: 350, comfort: 500 }[s] * 2 },
+                det(d, s) { return [{ k: '월 예산', v: `${{ tight: 200, neutral: 350, comfort: 500 }[s]}/월` }] }
             },
             {
                 id: 'travel', name: '타섬 여행', icon: '🏝️', fixed: false,
                 desc: '타이트 1회 / 중립·여유 2회 · 마우이·빅아일랜드',
                 confirmed: false,
                 val(d, s) {
-                    const data = { tight: { n: 1, per: 1000, cr: 0 }, neutral: { n: 2, per: 1000, cr: 0 }, comfort: { n: 2, per: 1500, cr: 0 } }[s];
-                    return data.per * data.n - data.cr;
+                    const data = { tight: { n: 1, per: 1000 }, neutral: { n: 2, per: 1000 }, comfort: { n: 2, per: 1500 } }[s];
+                    return data.per * data.n;
                 },
                 det(d, s) {
                     const data = {
-                        tight: { n: 1, per: 1000, cr: 0, note: '집 유지 + 현지 중립' },
-                        neutral: { n: 2, per: 1000, cr: 0, note: '마우이+빅아일랜드 각 2박3일 (기준 ₩3,000,000)' },
-                        comfort: { n: 2, per: 1500, cr: 0, note: '리조트급 (Four Seasons Maui급)' }
+                        tight: { n: 1, per: 1000, note: '집 유지 + 현지 중립' },
+                        neutral: { n: 2, per: 1000, note: '마우이+빅아일랜드 각 2박3일' },
+                        comfort: { n: 2, per: 1500, note: '리조트급 (Four Seasons Maui급)' }
                     }[s];
-                    const rows = [
+                    return [
                         { k: '여행 횟수', v: `${data.n}회 (${data.note})` },
                         { k: '1회 비용', v: `$${data.per.toLocaleString()}` },
-                    ];
-                    if (data.cr) rows.push({ k: '조기종료 절약', v: `-$${data.cr}` });
-                    rows.push({ k: '순 여행비', v: `$${(data.per * data.n - data.cr).toLocaleString()}` });
-                    return rows;
+                        { k: '순 여행비', v: `$${(data.per * data.n).toLocaleString()}` },
+                    ]
                 }
             },
             {
@@ -1241,9 +1754,7 @@
                 id: 'shopping', name: '쇼핑 / 의류', icon: '🛍️', fixed: false,
                 desc: '의류·잡화·아울렛·기념품 예산',
                 confirmed: false,
-                val(d, s) {
-                    return { tight: 300, neutral: 700, comfort: 1500 }[s] * 2;
-                },
+                val(d, s) { return { tight: 300, neutral: 700, comfort: 1500 }[s] * 2 },
                 det(d, s) {
                     return [
                         { k: '월 예산', v: `${{ tight: 300, neutral: 700, comfort: 1500 }[s]}/월` },
@@ -1257,6 +1768,7 @@
 
         // ── FORMAT ─────────────────────────────────────────────
         const usd = n => '$' + Math.round(n).toLocaleString();
+        const usdExact = n => '$' + (+n).toFixed(2).replace(/\.00$/, '').replace(/(\.\d)0$/, '$1');
         const krw = n => Math.round(n * rate / 10000).toLocaleString() + '만원';
         const both = n => `${usd(n)} / ${krw(n)}`;
 
@@ -1277,23 +1789,16 @@
             if (!c) return;
             const s = c.fixed ? 'neutral' : (scenarios[id] || 'neutral');
             const v = catVal(c, dur);
-
             const cu = document.getElementById('cu-' + id);
             const ck = document.getElementById('ck-' + id);
             if (cu) cu.textContent = usd(v);
             if (ck) ck.textContent = krw(v);
-
             const adjEl = document.getElementById('adj-' + id);
             if (adjEl) {
                 const a = adjs[id] || 0;
                 adjEl.textContent = a !== 0 ? ((a > 0 ? '+' : '') + usd(a)) : '조정 없음';
-                if (a !== 0) {
-                    adjEl.style.color = a > 0 ? 'var(--comfort)' : 'var(--tight)';
-                } else {
-                    adjEl.style.color = 'var(--txt3)';
-                }
+                adjEl.style.color = a !== 0 ? (a > 0 ? 'var(--comfort)' : 'var(--tight)') : 'var(--txt3)';
             }
-
             const detdEl = document.getElementById('detd-' + id);
             if (detdEl) {
                 let details = c.det(dur, s);
@@ -1307,24 +1812,16 @@
             if (adjin) adjin.value = adjs[id] || 0;
         }
 
-
         function setAdj(id, val) {
-            var v = parseInt(val) || 0;
-            adjs[id] = v;
+            adjs[id] = parseInt(val) || 0;
             updateCatUI(id);
             renderSummary();
-            if (mode === 'actual') renderActualSum();
         }
         function adjVal(id, amount) {
-
-            if (amount === 'reset') {
-                adjs[id] = 0;
-            } else {
-                adjs[id] = (adjs[id] || 0) + amount;
-            }
+            if (amount === 'reset') { adjs[id] = 0; }
+            else { adjs[id] = (adjs[id] || 0) + amount; }
             updateCatUI(id);
             renderSummary();
-            if (mode === 'actual') renderActualSum();
         }
 
         function renderCats() {
@@ -1338,7 +1835,6 @@
                     details.push({ k: '수동 세부조정', v: (adjs[c.id] > 0 ? '+' : '') + usd(adjs[c.id]) });
                     details.push({ k: '최종 시뮬레이션 금액', v: usd(v) });
                 }
-
                 const div = document.createElement('div');
                 div.className = 'cat'; div.id = 'cat-' + c.id;
                 const ctrlHTML = c.fixed
@@ -1346,45 +1842,42 @@
                     : `<div class="sc-btns" id="scb-${c.id}">${['tight', 'neutral', 'comfort'].map(x =>
                         `<button class="sc-btn ${s === x ? SC_CLS[x] : ''}" onclick="event.stopPropagation(); setSc('${c.id}','${x}')">${SL[x]}</button>`
                     ).join('')}</div>`;
-
                 const a = adjs[c.id] || 0;
                 const adjHTML = (c.fixed && c.id !== 'housing') ? '' : `
-      <div class="adj-wrap" style="margin-top: 8px; justify-content: flex-end;">
-        <div class="adj-ctrl">
-          <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', -50)">-</button>
-          <input type="number" class="adj-input" id="adjin-${c.id}" value="${a}" onclick="event.stopPropagation()" onchange="setAdj('${c.id}', this.value)" placeholder="0">
-          <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', 50)">+</button>
-        </div>
-      </div>
-    `;
-
+                <div class="adj-wrap" style="margin-top: 8px; justify-content: flex-end;">
+                    <div class="adj-ctrl">
+                        <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', -50)">-</button>
+                        <input type="number" class="adj-input" id="adjin-${c.id}" value="${a}" onclick="event.stopPropagation()" onchange="setAdj('${c.id}', this.value)" placeholder="0">
+                        <button class="adj-btn" onclick="event.stopPropagation(); adjVal('${c.id}', 50)">+</button>
+                    </div>
+                </div>`;
                 const okBadge = c.confirmed ? `<span class="badge-ok">✅ 확정</span>` : '';
                 div.innerHTML = `
-      <div class="cat-hd" onclick="toggleDet('${c.id}')">
-        <div class="cat-icon">${c.icon}</div>
-        <div class="cat-info">
-          <div class="cat-name">${c.name} ${okBadge}</div>
-          <div class="cat-sub">${c.desc}</div>
-        </div>
-        <div class="cat-right">
-          <div class="cat-amt-wrapper">
-            <div class="cat-amt">
-              <div class="c-usd" id="cu-${c.id}">${usd(v)}</div>
-              <div class="c-krw" id="ck-${c.id}">${krw(v)}</div>
-            </div>
-            <span class="chevron" id="chv-${c.id}">▼</span>
-          </div>
-          <div class="cat-controls" onclick="event.stopPropagation()">
-            ${ctrlHTML}
-            ${adjHTML}
-          </div>
-        </div>
-      </div>
-      <div class="cat-details" id="det-${c.id}" style="display:none">
-        <div id="detd-${c.id}">
-          ${details.map(d => `<div class="det-row"><span>${d.k}</span><span>${d.v}</span></div>`).join('')}
-        </div>
-      </div>`;
+                <div class="cat-hd" onclick="toggleDet('${c.id}')">
+                    <div class="cat-icon">${c.icon}</div>
+                    <div class="cat-info">
+                        <div class="cat-name">${c.name} ${okBadge}</div>
+                        <div class="cat-sub">${c.desc}</div>
+                    </div>
+                    <div class="cat-right">
+                        <div class="cat-amt-wrapper">
+                            <div class="cat-amt">
+                                <div class="c-usd" id="cu-${c.id}">${usd(v)}</div>
+                                <div class="c-krw" id="ck-${c.id}">${krw(v)}</div>
+                            </div>
+                            <span class="chevron" id="chv-${c.id}">▼</span>
+                        </div>
+                        <div class="cat-controls" onclick="event.stopPropagation()">
+                            ${ctrlHTML}
+                            ${adjHTML}
+                        </div>
+                    </div>
+                </div>
+                <div class="cat-details" id="det-${c.id}" style="display:none">
+                    <div id="detd-${c.id}">
+                        ${details.map(d => `<div class="det-row"><span>${d.k}</span><span>${d.v}</span></div>`).join('')}
+                    </div>
+                </div>`;
                 el.appendChild(div);
             });
         }
@@ -1403,25 +1896,12 @@
             const { tot, br } = calcAll(dur);
             const brEl = document.getElementById('brRows');
             brEl.innerHTML = CATS.map((c, i) => `
-    <div class="br-row">
-      <div class="br-lbl"><div class="br-dot" style="background:${COLORS[i]}"></div>${c.icon} ${c.name}</div>
-      <div class="br-val">${usd(br[c.id])}<div class="br-krw">${krw(br[c.id])}</div></div>
-    </div>`).join('');
+            <div class="br-row">
+                <div class="br-lbl"><div class="br-dot" style="background:${COLORS[i]}"></div>${c.icon} ${c.name}</div>
+                <div class="br-val">${usd(br[c.id])}<div class="br-krw">${krw(br[c.id])}</div></div>
+            </div>`).join('');
             document.getElementById('totUSD').textContent = usd(tot);
             document.getElementById('totKRW').textContent = krw(tot);
-
-            // Comparison
-            const r2 = calcAll('opt1'), r3 = calcAll('opt2');
-            document.getElementById('cmp2M').className = 'cmp-col' + (dur === 'opt1' ? ' act' : '');
-            document.getElementById('cmp3M').className = 'cmp-col' + (dur === 'opt2' ? ' act' : '');
-            document.getElementById('c2u').textContent = usd(r2.tot);
-            document.getElementById('c2k').textContent = krw(r2.tot);
-            document.getElementById('c3u').textContent = usd(r3.tot);
-            document.getElementById('c3k').textContent = krw(r3.tot);
-            const diff = r3.tot - r2.tot;
-            document.getElementById('cmpDiff').innerHTML =
-                `opt2가 opt1보다 <strong>${usd(Math.abs(diff))}</strong> (${krw(Math.abs(diff))}) ${diff > 0 ? '추가 소요' : '절감'}`;
-
             renderChart(br);
         }
 
@@ -1433,12 +1913,7 @@
                 type: 'bar',
                 data: {
                     labels: CATS.map(c => c.name),
-                    datasets: [{
-                        data: CATS.map(c => Math.round(br[c.id])),
-                        backgroundColor: COLORS,
-                        borderRadius: 4,
-                        borderSkipped: false,
-                    }]
+                    datasets: [{ data: CATS.map(c => Math.round(br[c.id])), backgroundColor: COLORS, borderRadius: 4, borderSkipped: false }]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false,
@@ -1454,126 +1929,403 @@
             });
         }
 
-        // ── RENDER ACTUAL MODE ─────────────────────────────────
-        function renderActual() {
-            const el = document.getElementById('actSection');
-            el.innerHTML = '';
-            CATS.forEach(c => {
-                const est = catVal(c, dur);
-                const actual = (actuals[c.id] !== undefined && actuals[c.id] !== null) ? actuals[c.id] : '';
-                const variance = actual !== '' ? parseFloat(actual) - est : null;
-                const varCls = variance === null ? 'vz' : variance > 0 ? 'vp' : variance < 0 ? 'vn' : 'vz';
-                const varTxt = variance === null ? '—' : (variance > 0 ? '+' : '') + usd(variance);
-                const div = document.createElement('div');
-                div.className = 'ac';
-                div.innerHTML = `
-      <div class="ac-hd">
-        <div class="ac-name">${c.icon} ${c.name}</div>
-        <div class="ac-est">예산 ${usd(est)} / ${krw(est)}</div>
-      </div>
-      <div class="ac-body">
-        <div class="ac-iw">
-          <div class="ac-lbl">실제 지출 (USD)</div>
-          <input type="number" class="ac-in" placeholder="${Math.round(est)}"
-            value="${actual}"
-            oninput="setActual('${c.id}',this.value)">
-        </div>
-        <div>
-          <div class="ac-lbl">차이</div>
-          <div class="ac-var ${varCls}" id="var-${c.id}">${varTxt}</div>
-        </div>
-      </div>`;
-                el.appendChild(div);
-            });
-            renderActualSum();
+        // ── EXPENSE LOG MODE ───────────────────────────────────
+        async function loadExpenses() {
+            if (!API) {
+                // 로컬 스토리지 폴백
+                try { expenses = JSON.parse(localStorage.getItem('hawaii_expenses') || '[]'); } catch { expenses = []; }
+                document.getElementById('apiBanner').style.display = 'flex';
+                renderLog();
+                renderLogSummary();
+                return;
+            }
+            try {
+                const res = await fetch(API + '/api/expenses');
+                if (!res.ok) throw new Error('API error');
+                expenses = await res.json();
+                document.getElementById('apiBanner').style.display = 'none';
+            } catch {
+                try { expenses = JSON.parse(localStorage.getItem('hawaii_expenses') || '[]'); } catch { expenses = []; }
+                document.getElementById('apiBanner').style.display = 'flex';
+                showToast('API 연결 실패 — 로컬 데이터 사용 중');
+            }
+            renderLog();
+            renderLogSummary();
         }
 
-        function renderActualSum() {
-            const { tot: budget } = calcAll(dur);
-            let real = 0;
-            const rows = CATS.map(c => {
-                const est = catVal(c, dur);
-                const hasActual = actuals[c.id] !== undefined && actuals[c.id] !== '';
-                const actual = hasActual ? parseFloat(actuals[c.id]) : est;
-                real += actual;
-                const v = actual - est;
-                return { c, est, actual, v, hasActual };
+        function saveLocal() {
+            localStorage.setItem('hawaii_expenses', JSON.stringify(expenses));
+        }
+
+        function renderLog() {
+            const filterCat = document.getElementById('filterCat').value;
+            const filterPayer = document.getElementById('filterPayer').value;
+
+            let filtered = expenses.filter(e => {
+                if (filterCat && e.category_id !== filterCat) return false;
+                if (filterPayer && e.payer !== filterPayer) return false;
+                return true;
             });
-            document.getElementById('actSumRows').innerHTML = rows.map(r => `
-    <div class="as-row">
-      <span>${r.c.icon} ${r.c.name}</span>
-      <span class="${r.v > 0 ? 'vp' : r.v < 0 ? 'vn' : 'vz'}" style="font-weight:500">
-        ${r.hasActual ? usd(r.actual) + (r.v !== 0 ? ` (${r.v > 0 ? '+' : ''}${usd(r.v)})` : '') : usd(r.est) + ' (예산)'}
-      </span>
-    </div>`).join('');
-            document.getElementById('aBudget').textContent = both(budget);
-            document.getElementById('aReal').textContent = both(real);
-            const diff = real - budget;
-            const dEl = document.getElementById('aDiff');
-            dEl.className = diff > 0 ? 'vp' : diff < 0 ? 'vn' : 'vz';
-            dEl.style.fontFamily = "'Crimson Pro',serif";
-            dEl.style.fontWeight = '600';
-            dEl.style.fontSize = '18px';
-            dEl.textContent = diff === 0 ? '동일' : (diff > 0 ? '+' : '') + both(Math.abs(diff)) + (diff > 0 ? ' 초과' : ' 절감');
+
+            const el = document.getElementById('expList');
+
+            if (filtered.length === 0) {
+                el.innerHTML = `<div class="exp-empty"><div class="exp-empty-icon">📋</div>기록된 지출이 없습니다.<br>+ 지출 추가 버튼으로 시작하세요.</div>`;
+                return;
+            }
+
+            // Group by category
+            const showAll = !filterCat;
+            if (showAll) {
+                const grouped = {};
+                CATS.forEach(c => { grouped[c.id] = [] });
+                filtered.forEach(e => {
+                    if (!grouped[e.category_id]) grouped[e.category_id] = [];
+                    grouped[e.category_id].push(e);
+                });
+
+                el.innerHTML = '';
+                CATS.forEach(c => {
+                    const items = grouped[c.id];
+                    if (!items || items.length === 0) return;
+                    el.appendChild(buildGroupEl(c, items));
+                });
+            } else {
+                el.innerHTML = '';
+                const c = CATS.find(x => x.id === filterCat);
+                if (c) el.appendChild(buildGroupEl(c, filtered));
+            }
+        }
+
+        function buildGroupEl(cat, items) {
+            const total = items.reduce((s, e) => s + e.amount_usd, 0);
+            const budget = catVal(cat, dur);
+            const pct = Math.min(100, Math.round(total / budget * 100));
+            const barColor = pct > 100 ? 'var(--comfort)' : pct > 75 ? '#B07D1A' : 'var(--tight)';
+
+            const div = document.createElement('div');
+            div.className = 'exp-group';
+
+            const sortedItems = [...items].sort((a, b) => b.date.localeCompare(a.date));
+
+            div.innerHTML = `
+            <div class="exp-group-hd" onclick="toggleGroup('g-${cat.id}')">
+                <div class="exp-group-left">
+                    <span class="exp-group-icon">${cat.icon}</span>
+                    <span class="exp-group-name">${cat.name}</span>
+                    <span style="font-size:12.5px;color:var(--txt3)">${items.length}건</span>
+                </div>
+                <div class="exp-group-right">
+                    <div style="text-align:right">
+                        <div class="exp-group-total">${usdExact(total)}</div>
+                        <div class="exp-group-budget">예산 ${usd(budget)} · ${pct}%</div>
+                        <div class="exp-group-bar"><div class="exp-group-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
+                    </div>
+                    <span class="chevron open" id="chv-g-${cat.id}">▼</span>
+                </div>
+            </div>
+            <div class="exp-items" id="g-${cat.id}">
+                ${sortedItems.map(e => buildItemHTML(e)).join('')}
+            </div>`;
+            return div;
+        }
+
+        function buildItemHTML(e) {
+            const payerCls = e.payer === 'dongryool' ? 'payer-dongryool' : 'payer-yuhee';
+            const payerLabel = e.payer === 'dongryool' ? '동률' : '유희';
+            const dateShort = e.date.slice(5); // MM-DD
+            return `
+            <div class="exp-item" id="ei-${e.id}">
+                <span class="exp-date">${dateShort}</span>
+                <span class="exp-payer-badge ${payerCls}">${payerLabel}</span>
+                <div style="flex:1;min-width:0">
+                    <div class="exp-desc">${escHtml(e.description)}</div>
+                    ${e.memo ? `<div class="exp-memo">${escHtml(e.memo)}</div>` : ''}
+                </div>
+                <div style="text-align:right;flex-shrink:0">
+                    <div class="exp-amount">${usdExact(e.amount_usd)}</div>
+                    <div class="exp-amount-krw">${krw(e.amount_usd)}</div>
+                </div>
+                <div class="exp-actions">
+                    <button class="exp-act-btn" onclick="openEditModal('${e.id}')">편집</button>
+                    <button class="exp-act-btn del" onclick="deleteExpense('${e.id}')">삭제</button>
+                </div>
+            </div>`;
+        }
+
+        function toggleGroup(id) {
+            const el = document.getElementById(id);
+            const chv = document.getElementById('chv-' + id);
+            if (!el) return;
+            const open = el.style.display !== 'none';
+            el.style.display = open ? 'none' : 'block';
+            if (chv) chv.classList.toggle('open', !open);
+        }
+
+        function renderLogSummary() {
+            const { br: budget } = calcAll(dur);
+
+            // Category totals
+            const catTotals = {};
+            expenses.forEach(e => {
+                catTotals[e.category_id] = (catTotals[e.category_id] || 0) + e.amount_usd;
+            });
+            const grandTotal = Object.values(catTotals).reduce((s, v) => s + v, 0);
+
+            document.getElementById('logSummary').innerHTML = `
+            <div style="margin-bottom:6px">
+                <div style="font-size:12.5px;color:var(--txt3);margin-bottom:2px">총 지출</div>
+                <div style="font-family:'Crimson Pro',serif;font-size:32px;font-weight:600;color:var(--accent);line-height:1">${usdExact(grandTotal)}</div>
+                <div style="font-size:14px;color:var(--txt2);margin-top:3px">${krw(grandTotal)}</div>
+            </div>
+            <div style="font-size:12.5px;color:var(--txt3);margin-top:10px">${expenses.length}건의 지출 기록</div>`;
+
+            // Payer summary
+            const drTotal = expenses.filter(e => e.payer === 'dongryool').reduce((s, e) => s + e.amount_usd, 0);
+            const yhTotal = expenses.filter(e => e.payer === 'yuhee').reduce((s, e) => s + e.amount_usd, 0);
+            const bothTotal = drTotal + yhTotal || 1;
+
+            document.getElementById('payerSummary').innerHTML = `
+            <div class="person-block">
+                <div class="person-name" style="color:var(--dongryool)">동률</div>
+                <div class="person-amt" style="color:var(--dongryool)">${usdExact(drTotal)}</div>
+                <div class="person-krw">${krw(drTotal)}</div>
+            </div>
+            <div class="vs-bar">
+                <span class="vs-label" style="color:var(--dongryool)">동률</span>
+                <div class="vs-track">
+                    <div class="vs-fill" style="width:${Math.round(drTotal / bothTotal * 100)}%;background:var(--dongryool)"></div>
+                </div>
+                <span class="vs-pct" style="color:var(--dongryool)">${Math.round(drTotal / bothTotal * 100)}%</span>
+            </div>
+            <hr class="person-sep">
+            <div class="person-block">
+                <div class="person-name" style="color:var(--yuhee)">유희</div>
+                <div class="person-amt" style="color:var(--yuhee)">${usdExact(yhTotal)}</div>
+                <div class="person-krw">${krw(yhTotal)}</div>
+            </div>
+            <div class="vs-bar">
+                <span class="vs-label" style="color:var(--yuhee)">유희</span>
+                <div class="vs-track">
+                    <div class="vs-fill" style="width:${Math.round(yhTotal / bothTotal * 100)}%;background:var(--yuhee)"></div>
+                </div>
+                <span class="vs-pct" style="color:var(--yuhee)">${Math.round(yhTotal / bothTotal * 100)}%</span>
+            </div>`;
+
+            // Budget vs actual
+            const rows = CATS.map(c => {
+                const actual = catTotals[c.id] || 0;
+                const bud = catVal(c, dur);
+                const pct = bud > 0 ? Math.min(150, Math.round(actual / bud * 100)) : 0;
+                const barColor = pct > 100 ? 'var(--comfort)' : pct > 75 ? '#B07D1A' : 'var(--tight)';
+                if (actual === 0) return '';
+                return `
+                <div class="log-cat-row">
+                    <span class="log-cat-lbl">${c.icon} ${c.name}</span>
+                    <div style="text-align:right">
+                        <div class="log-cat-val">${usdExact(actual)}</div>
+                        <div style="font-size:11.5px;color:${pct > 100 ? 'var(--comfort)' : 'var(--txt3)'}">예산의 ${pct}%</div>
+                    </div>
+                </div>`;
+            }).join('');
+            const budgetTotal = calcAll(dur).tot;
+            const diffAmt = grandTotal - budgetTotal;
+            document.getElementById('budgetVsActual').innerHTML = rows || `<div style="color:var(--txt3);font-size:13.5px;padding:8px 0">지출 기록 후 표시됩니다</div>`;
+            if (rows) {
+                document.getElementById('budgetVsActual').innerHTML += `
+                <div style="margin-top:12px;padding-top:10px;border-top:2px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+                    <span style="font-size:13.5px;color:var(--txt2)">예산 대비</span>
+                    <span style="font-family:'Crimson Pro',serif;font-size:20px;font-weight:600;color:${diffAmt > 0 ? 'var(--comfort)' : diffAmt < 0 ? 'var(--tight)' : 'var(--txt3)'}">
+                        ${diffAmt === 0 ? '동일' : (diffAmt > 0 ? '+' : '') + usdExact(diffAmt)}
+                    </span>
+                </div>`;
+            }
+        }
+
+        // ── MODAL ──────────────────────────────────────────────
+        function openModal(prefillCat) {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = '지출 추가';
+            document.getElementById('editId').value = '';
+            document.getElementById('fDate').value = new Date().toISOString().slice(0, 10);
+            document.getElementById('fCat').value = prefillCat || CATS[0].id;
+            document.getElementById('fDesc').value = '';
+            document.getElementById('fAmt').value = '';
+            document.getElementById('fMemo').value = '';
+            selectPayer('dongryool');
+            document.getElementById('btnSave').textContent = '저장';
+            document.getElementById('modalBg').classList.add('open');
+            setTimeout(() => document.getElementById('fDesc').focus(), 100);
+        }
+
+        function openEditModal(id) {
+            const e = expenses.find(x => x.id === id);
+            if (!e) return;
+            editingId = id;
+            document.getElementById('modalTitle').textContent = '지출 수정';
+            document.getElementById('editId').value = id;
+            document.getElementById('fDate').value = e.date;
+            document.getElementById('fCat').value = e.category_id;
+            document.getElementById('fDesc').value = e.description;
+            document.getElementById('fAmt').value = e.amount_usd;
+            document.getElementById('fMemo').value = e.memo || '';
+            selectPayer(e.payer);
+            document.getElementById('btnSave').textContent = '수정 저장';
+            document.getElementById('modalBg').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('modalBg').classList.remove('open');
+        }
+        function closeModalBg(e) {
+            if (e.target === document.getElementById('modalBg')) closeModal();
+        }
+
+        function selectPayer(payer) {
+            selectedPayer = payer;
+            document.getElementById('payerDR').className = 'payer-opt' + (payer === 'dongryool' ? ' sel-dongryool' : '');
+            document.getElementById('payerYH').className = 'payer-opt' + (payer === 'yuhee' ? ' sel-yuhee' : '');
+        }
+
+        async function saveExpense() {
+            const date = document.getElementById('fDate').value;
+            const category_id = document.getElementById('fCat').value;
+            const description = document.getElementById('fDesc').value.trim();
+            const amount_usd = parseFloat(document.getElementById('fAmt').value);
+            const memo = document.getElementById('fMemo').value.trim();
+
+            if (!date || !description || isNaN(amount_usd) || amount_usd < 0 || !selectedPayer) {
+                showToast('날짜, 내용, 금액, 결제자를 모두 입력해주세요');
+                return;
+            }
+
+            const btn = document.getElementById('btnSave');
+            btn.disabled = true;
+            btn.textContent = '저장 중…';
+
+            const payload = { category_id, date, description, amount_usd, payer: selectedPayer, memo };
+
+            try {
+                if (API) {
+                    if (editingId) {
+                        await fetch(`${API}/api/expenses/${editingId}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const idx = expenses.findIndex(e => e.id === editingId);
+                        if (idx !== -1) expenses[idx] = { ...expenses[idx], ...payload };
+                    } else {
+                        const res = await fetch(`${API}/api/expenses`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const data = await res.json();
+                        expenses.unshift({ id: data.id, ...payload, created_at: new Date().toISOString() });
+                    }
+                } else {
+                    // 로컬 저장
+                    if (editingId) {
+                        const idx = expenses.findIndex(e => e.id === editingId);
+                        if (idx !== -1) expenses[idx] = { ...expenses[idx], ...payload };
+                    } else {
+                        expenses.unshift({ id: Date.now().toString(), ...payload, created_at: new Date().toISOString() });
+                    }
+                    saveLocal();
+                }
+                closeModal();
+                renderLog();
+                renderLogSummary();
+                showToast(editingId ? '수정되었습니다' : '지출이 추가되었습니다');
+            } catch {
+                showToast('저장 실패 — 다시 시도해주세요');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = editingId ? '수정 저장' : '저장';
+            }
+        }
+
+        async function deleteExpense(id) {
+            if (!confirm('이 지출을 삭제할까요?')) return;
+            try {
+                if (API) {
+                    await fetch(`${API}/api/expenses/${id}`, { method: 'DELETE' });
+                }
+                expenses = expenses.filter(e => e.id !== id);
+                if (!API) saveLocal();
+                renderLog();
+                renderLogSummary();
+                showToast('삭제되었습니다');
+            } catch {
+                showToast('삭제 실패 — 다시 시도해주세요');
+            }
         }
 
         // ── ACTIONS ────────────────────────────────────────────
-        function setDur(d) {
-            dur = d;
-            document.querySelectorAll('.dur-btn').forEach((b, i) => b.classList.toggle('on', (i === 0) === (d === 'opt1')));
-            renderAll();
-        }
         function updateRate(v) {
             const n = parseInt(v); if (n > 0) rate = n;
             renderAll();
         }
         function setSc(id, s) {
             scenarios[id] = s;
-            // Update buttons
             document.querySelectorAll(`#scb-${id} .sc-btn`).forEach((b, i) => {
                 const keys = ['tight', 'neutral', 'comfort'];
                 b.className = 'sc-btn' + (keys[i] === s ? ' ' + SC_CLS[keys[i]] : '');
             });
             updateCatUI(id);
             renderSummary();
-            if (mode === 'actual') renderActualSum();
         }
         function applyPreset(s) {
-            CATS.forEach(c => {
-                if (!c.fixed) scenarios[c.id] = s;
-                adjs[c.id] = 0;
-            });
+            CATS.forEach(c => { if (!c.fixed) scenarios[c.id] = s; adjs[c.id] = 0; });
             renderCats(); renderSummary();
-            if (mode === 'actual') renderActual();
         }
         function setMode(m) {
             mode = m;
             document.querySelectorAll('.m-tab').forEach((t, i) => t.classList.toggle('on', (i === 0) === (m === 'calc')));
             document.getElementById('calcMode').style.display = m === 'calc' ? 'block' : 'none';
-            document.getElementById('actualMode').style.display = m === 'actual' ? 'block' : 'none';
-            if (m === 'actual') renderActual();
+            document.getElementById('logMode').style.display = m === 'log' ? 'block' : 'none';
+            document.getElementById('presetBar').style.display = m === 'calc' ? 'flex' : 'none';
+            if (m === 'log') loadExpenses();
         }
-        function setActual(id, v) {
-            actuals[id] = v;
-            const cat = CATS.find(c => c.id === id);
-            if (cat) {
-                const est = catVal(cat, dur);
-                const actual = v === '' ? null : parseFloat(v);
-                const variance = actual === null ? null : actual - est;
-                const el = document.getElementById('var-' + id);
-                if (el) {
-                    el.textContent = variance === null ? '—' : (variance > 0 ? '+' : '') + usd(variance);
-                    el.className = 'ac-var ' + (variance === null ? 'vz' : variance > 0 ? 'vp' : variance < 0 ? 'vn' : 'vz');
-                }
-            }
-            renderActualSum();
-        }
+
         function renderAll() {
             renderCats(); renderSummary();
-            if (mode === 'actual') renderActual();
+            if (mode === 'log') { renderLog(); renderLogSummary(); }
+        }
+
+        // ── TOAST ──────────────────────────────────────────────
+        let toastTimer;
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+        }
+
+        function escHtml(s) {
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
 
         // ── INIT ───────────────────────────────────────────────
+        function initFilterCat() {
+            const sel = document.getElementById('filterCat');
+            CATS.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id; opt.textContent = c.icon + ' ' + c.name;
+                sel.appendChild(opt);
+            });
+            // Modal category select
+            const fCat = document.getElementById('fCat');
+            CATS.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id; opt.textContent = c.icon + ' ' + c.name;
+                fCat.appendChild(opt);
+            });
+        }
+
+        initFilterCat();
         renderAll();
     </script>
 </body>
